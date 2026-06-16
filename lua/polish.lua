@@ -31,6 +31,17 @@ if vim.g.neovide then
   vim.g.neovide_window_blurred = true
   vim.g.neovide_input_macos_option_key_is_meta = "both"
   vim.g.neovide_input_macos_alt_is_meta = true
+
+  local trail_colors = {
+    "#ff4fd8", "#c14fff", "#ff6ac1", "#ff7eb6", "#ff5d8f",
+    "#b98aff", "#7df9ff", "#5ef1d6", "#ffd479", "#86d3ff", "#ffae57", "#a8f0c6",
+  }
+  local function rand_cursor()
+    vim.api.nvim_set_hl(0, "Cursor", { bg = trail_colors[math.random(#trail_colors)], fg = "#0c0910" })
+  end
+  rand_cursor()
+  local ct = (vim.uv or vim.loop).new_timer()
+  ct:start(5000, 5000, vim.schedule_wrap(rand_cursor))
 end
 
 vim.api.nvim_create_autocmd("VimEnter", {
