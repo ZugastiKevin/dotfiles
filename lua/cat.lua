@@ -4,11 +4,17 @@ local uv = vim.uv or vim.loop
 local buf, win, timer
 local pos, dir = 2, 1
 local mode, mode_left = "walk", 0
+local reaction, reaction_left = nil, 0
+local last_errs = 0
 local enabled = true
 
 local CAT = "\u{F011B}"
 
-local function text()
+local function react(glyph, ticks)
+  reaction, reaction_left = glyph, ticks
+end
+
+local function normal_text()
   if mode == "sleep" then return CAT .. " z" end
   return CAT
 end
@@ -30,24 +36,29 @@ local function draw()
   local lines = vim.o.lines
   if cols < 12 or lines < 6 then return end
 
-  mode_left = mode_left - 1
-  if mode_left <= 0 then
-    local r = math.random(100)
-    if r < 68 then
-      mode, mode_left = "walk", math.random(10, 30)
-    elseif r < 88 then
-      mode, mode_left = "sit", math.random(6, 16)
-    else
-      mode, mode_left = "sleep", math.random(12, 24)
+  local reacting = reaction_left > 0
+  if reacting then reaction_left = reaction_left - 1 end
+
+  if not reacting then
+    mode_left = mode_left - 1
+    if mode_left <= 0 then
+      local r = math.random(100)
+      if r < 68 then
+        mode, mode_left = "walk", math.random(10, 30)
+      elseif r < 88 then
+        mode, mode_left = "sit", math.random(6, 16)
+      else
+        mode, mode_left = "sleep", math.random(12, 24)
+      end
     end
   end
 
-  local t = text()
+  local t = reacting and (CAT .. " " .. reaction) or normal_text()
   local w = vim.fn.strwidth(t)
 
   local rightmost = cols - w - 28
   if rightmost < 1 then rightmost = cols - w - 1 end
-  if mode == "walk" then
+  if mode == "walk" and not reacting then
     pos = pos + dir
     if pos < 1 then
       pos, dir = 1, 1
@@ -93,6 +104,20 @@ end
 function M.setup()
   vim.api.nvim_set_hl(0, "CatPet", { fg = "#ff6ec7", bg = "NONE" })
   math.randomseed(uv.hrtime())
+
+  vim.api.nvim_create_autocmd("BufWritePost", {
+    desc = "Chat content quand tu sauvegardes",
+    callback = function() react("\u{2665}", 10) end,
+  })
+  vim.api.nvim_create_autocmd("DiagnosticChanged", {
+    desc = "Chat inquiet quand une erreur apparait",
+    callback = function()
+      local errs = #vim.diagnostic.get(nil, { severity = vim.diagnostic.severity.ERROR })
+      if errs > last_errs then react("!", 8) end
+      last_errs = errs
+    end,
+  })
+
   if timer then return end
   timer = uv.new_timer()
   timer:start(1500, 220, vim.schedule_wrap(draw))
