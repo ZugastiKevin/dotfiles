@@ -48,7 +48,7 @@ return {
     default_style = "cc0",
     random = false,
     death_animation = false,
-    popup = { width = "35%", winblend = 100, avoid_statusline = false },
+    popup = { width = "100%", winblend = 100, avoid_statusline = false },
   },
   specs = {
     {
