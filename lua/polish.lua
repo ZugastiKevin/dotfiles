@@ -200,6 +200,13 @@ local function float_open()
   return false
 end
 
+vim.api.nvim_create_autocmd({ "TermOpen", "BufWinEnter", "WinEnter" }, {
+  desc = "Terminal: passer en mode insertion automatiquement",
+  callback = function()
+    if vim.bo.buftype == "terminal" then vim.cmd "startinsert" end
+  end,
+})
+
 vim.api.nvim_create_autocmd("CursorHold", {
   desc = "Auto popup: diagnostics or documentation under cursor",
   callback = function()
