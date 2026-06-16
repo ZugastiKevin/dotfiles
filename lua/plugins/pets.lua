@@ -21,11 +21,25 @@ local function restore_assets()
   end
 end
 
+local function patch_hologram()
+  local ok, term = pcall(require, "hologram.terminal")
+  if not ok then return end
+  term.move_cursor = function(row, col)
+    term.write "\x1b[s"
+    term.write("\x1b[" .. row .. ";" .. col .. "H")
+  end
+end
+
+local function init()
+  restore_assets()
+  patch_hologram()
+end
+
 return {
   "giusgad/pets.nvim",
   dependencies = { "MunifTanjim/nui.nvim", "edluffy/hologram.nvim" },
   cmd = { "PetsNew", "PetsNewCustom" },
-  init = restore_assets,
+  init = init,
   opts = {
     row = 9,
     col = 0,
@@ -34,7 +48,7 @@ return {
     default_style = "cc0",
     random = false,
     death_animation = false,
-    popup = { width = "35%", winblend = 100, avoid_statusline = true },
+    popup = { width = "35%", winblend = 100, avoid_statusline = false },
   },
   specs = {
     {
