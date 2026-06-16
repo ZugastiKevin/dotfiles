@@ -200,6 +200,8 @@ local function float_open()
   return false
 end
 
+pcall(function() require("cat").setup() end)
+
 vim.api.nvim_create_autocmd({ "TermOpen", "BufWinEnter", "WinEnter" }, {
   desc = "Terminal: passer en mode insertion automatiquement",
   callback = function()
