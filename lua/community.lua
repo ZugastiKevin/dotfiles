@@ -30,6 +30,10 @@ return {
   { import = "astrocommunity.editing-support.rainbow-delimiters-nvim" },
   { import = "astrocommunity.diagnostics.tiny-inline-diagnostic-nvim" },
   { import = "astrocommunity.scrolling.satellite-nvim" },
+  { import = "astrocommunity.project.project-nvim" },
+  { import = "astrocommunity.media.pets-nvim" },
+  { import = "astrocommunity.media.neocord-nvim" },
+  { import = "astrocommunity.completion.blink-copilot" },
 
   { import = "astrocommunity.colorscheme.catppuccin" },
   { import = "astrocommunity.colorscheme.rose-pine" },

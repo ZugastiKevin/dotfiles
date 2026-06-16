@@ -45,15 +45,17 @@ local function draw()
   local t = text()
   local w = vim.fn.strwidth(t)
 
+  local rightmost = cols - w - 28
+  if rightmost < 1 then rightmost = cols - w - 1 end
   if mode == "walk" then
     pos = pos + dir
     if pos < 1 then
       pos, dir = 1, 1
-    elseif pos > cols - w - 1 then
-      pos, dir = cols - w - 1, -1
+    elseif pos > rightmost then
+      pos, dir = rightmost, -1
     end
   end
-  if pos > cols - w - 1 then pos = cols - w - 1 end
+  if pos > rightmost then pos = rightmost end
   if pos < 1 then pos = 1 end
 
   if not valid_buf() then buf = vim.api.nvim_create_buf(false, true) end
