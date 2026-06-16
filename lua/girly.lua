@@ -2,7 +2,7 @@ local M = {}
 
 local statefile = vim.fn.stdpath "data" .. "/girly_theme.txt"
 
-M.order = { "neon", "pastel", "darkpink", "bubblegum", "vaporwave" }
+M.order = { "neon", "pastel", "darkpink", "bubblegum", "vaporwave", "candyland", "pinkpanic" }
 
 M.themes = {
   neon = {
@@ -44,6 +44,22 @@ M.themes = {
     txt = "#e6d6ff", comment = "#6f6699",
     func = "#ff6ec7", kw = "#9d7bff", typ = "#5ef1d6", str = "#ffd479",
     num = "#ff9e80", prop = "#7df9ff", param = "#c9a7ff", op = "#ff79c6",
+  },
+  candyland = {
+    label = "Candyland (rose+bleu)",
+    bg = "#1a1b26", bg_alt = "#16161e", float = "#16161e", cursorline = "#292e42",
+    linenr = "#565f89", visual = "#2d59a1", punct = "#a9b1d6", delim = "#737aa2",
+    txt = "#c0caf5", comment = "#565f89",
+    func = "#7aa2f7", kw = "#ff9aef", typ = "#80daff", str = "#ffcfe8",
+    num = "#ff849a", prop = "#80daff", param = "#bb9af7", op = "#ff9aef",
+  },
+  pinkpanic = {
+    label = "Pink Panic (magenta)",
+    bg = "#1a1020", bg_alt = "#150c1a", float = "#1f1226", cursorline = "#281530",
+    linenr = "#5a4060", visual = "#3a1c3a", punct = "#c08ac0", delim = "#8a6a8a",
+    txt = "#f3d6ee", comment = "#7a5f78",
+    func = "#f43c86", kw = "#e90c7a", typ = "#e90cde", str = "#ffaaf5",
+    num = "#ff70b5", prop = "#9adcff", param = "#ffaaf5", op = "#ff70b5",
   },
 }
 

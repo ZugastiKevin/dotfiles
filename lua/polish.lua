@@ -67,6 +67,17 @@ end
 pcall(function() require("cat").setup() end)
 pcall(function() require("sysinfo").setup() end)
 
+vim.api.nvim_create_autocmd("FileChangedShell", {
+  desc = "Recharger sans demander quand le fichier change en dehors",
+  callback = function() vim.v.fcs_choice = "reload" end,
+})
+vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter", "CursorHold", "CursorHoldI" }, {
+  desc = "Detecter les changements disque",
+  callback = function()
+    if vim.fn.mode() ~= "c" and vim.fn.getcmdwintype() == "" then pcall(vim.cmd.checktime) end
+  end,
+})
+
 vim.api.nvim_create_autocmd({ "TermOpen", "BufWinEnter", "WinEnter" }, {
   desc = "Terminal: passer en mode insertion automatiquement",
   callback = function()

@@ -48,7 +48,7 @@ return {
         foldlevel = 99,
         foldlevelstart = 99,
         foldenable = true,
-        confirm = true,
+        autoread = true,
         swapfile = false,
         undofile = true,
       },
