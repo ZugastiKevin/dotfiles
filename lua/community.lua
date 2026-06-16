@@ -34,6 +34,8 @@ return {
   { import = "astrocommunity.media.pets-nvim" },
   { import = "astrocommunity.media.neocord-nvim" },
   { import = "astrocommunity.completion.blink-copilot" },
+  { import = "astrocommunity.color.twilight-nvim" },
+  { import = "astrocommunity.quickfix.nvim-bqf" },
 
   { import = "astrocommunity.colorscheme.catppuccin" },
   { import = "astrocommunity.colorscheme.rose-pine" },
