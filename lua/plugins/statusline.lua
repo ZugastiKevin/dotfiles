@@ -6,7 +6,7 @@ return {
     table.insert(opts.statusline, {
       provider = function()
         local s = vim.g.sysinfo_str
-        if s and s ~= "" then return " " .. s .. " " end
+        if s and s ~= "" then return ((" " .. s .. " "):gsub("%%", "%%%%")) end
         return ""
       end,
       hl = { fg = "#ff9ad4", bold = true },
