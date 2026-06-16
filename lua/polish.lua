@@ -64,7 +64,18 @@ local function float_open()
   return false
 end
 
-pcall(function() require("cat").setup() end)
+local function graphics_term()
+  if vim.g.neovide then return false end
+  local prog = (vim.env.TERM_PROGRAM or ""):lower()
+  local term = (vim.env.TERM or ""):lower()
+  return prog == "ghostty"
+    or prog == "wezterm"
+    or term:find "ghostty"
+    or term:find "kitty"
+    or vim.env.KITTY_WINDOW_ID ~= nil
+end
+
+if not graphics_term() then pcall(function() require("cat").setup() end) end
 pcall(function() require("sysinfo").setup() end)
 
 vim.api.nvim_create_autocmd("FileChangedShell", {
