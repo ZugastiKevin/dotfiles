@@ -38,9 +38,4 @@ return {
   { import = "astrocommunity.quickfix.nvim-bqf" },
 
   { import = "astrocommunity.colorscheme.catppuccin" },
-  { import = "astrocommunity.colorscheme.rose-pine" },
-  { import = "astrocommunity.colorscheme.tokyonight-nvim" },
-  { import = "astrocommunity.colorscheme.oxocarbon-nvim" },
-  { import = "astrocommunity.colorscheme.eldritch-nvim" },
-  { import = "astrocommunity.colorscheme.cyberdream-nvim" },
 }

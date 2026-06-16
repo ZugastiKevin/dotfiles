@@ -107,6 +107,7 @@ return {
           desc = "Toggle doc auto au survol",
         },
         ["<Leader>uT"] = { "<Cmd>Twilight<CR>", desc = "Twilight (focus bloc courant)" },
+        ["<Leader>uG"] = { "<Cmd>GirlyTheme<CR>", desc = "Choisir un theme girly" },
 
         ["<D-[>"] = { "<C-o>", desc = "Navigate back" },
         ["<D-]>"] = { "<C-i>", desc = "Navigate forward" },
