@@ -92,6 +92,9 @@ Touches : Ctrl, Cmd, Shift. Aucune touche F (elles demandent Fn sur Mac) -> tout
 | Lazygit (commit/push/diff/branches) | Cmd+9 |
 | Scrollbar a droite (erreurs/git/recherche) | automatique |
 | Doc auto au survol : activer/desactiver | Espace u o |
+| Redimensionner la fenetre | Cmd+Shift+H/J/K/L |
+| Twilight (focus, assombrit le reste) | Espace u T |
+| Quickfix avec apercu (nvim-bqf) | automatique dans la quickfix |
 | Markdown joli, cmdline flottante, brackets colores | automatique |
 
 ## Mode insertion
