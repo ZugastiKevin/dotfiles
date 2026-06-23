@@ -9,7 +9,6 @@ return {
   { import = "astrocommunity.pack.markdown" },
   { import = "astrocommunity.pack.cpp" },
   { import = "astrocommunity.pack.java" },
-  { import = "astrocommunity.pack.cs" },
   { import = "astrocommunity.pack.python" },
   { import = "astrocommunity.pack.swift" },
   { import = "astrocommunity.debugging.nvim-dap-virtual-text" },
@@ -18,8 +17,6 @@ return {
   { import = "astrocommunity.lsp.inc-rename-nvim" },
 
   { import = "astrocommunity.editing-support.auto-save-nvim" },
-  { import = "astrocommunity.recipes.auto-session-restore" },
-  { import = "astrocommunity.motion.harpoon" },
   { import = "astrocommunity.bars-and-lines.vim-illuminate" },
   { import = "astrocommunity.search.grug-far-nvim" },
   { import = "astrocommunity.markdown-and-latex.render-markdown-nvim" },
@@ -30,12 +27,13 @@ return {
   { import = "astrocommunity.editing-support.rainbow-delimiters-nvim" },
   { import = "astrocommunity.diagnostics.tiny-inline-diagnostic-nvim" },
   { import = "astrocommunity.scrolling.satellite-nvim" },
+  { import = "astrocommunity.scrolling.neoscroll-nvim" },
   { import = "astrocommunity.project.project-nvim" },
-  { import = "astrocommunity.media.pets-nvim" },
   { import = "astrocommunity.media.neocord-nvim" },
-  { import = "astrocommunity.completion.blink-copilot" },
   { import = "astrocommunity.color.twilight-nvim" },
   { import = "astrocommunity.quickfix.nvim-bqf" },
+  { import = "astrocommunity.code-runner.overseer-nvim" },
+  { import = "astrocommunity.editing-support.neogen" },
 
   { import = "astrocommunity.colorscheme.catppuccin" },
 }

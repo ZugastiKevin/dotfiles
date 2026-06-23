@@ -1,0 +1,227 @@
+local core = {
+  { "<D-o>", "Aller a un fichier" },
+  { "<D-e>", "Fichiers recents" },
+  { "<Leader>fp", "Changer de projet (liste complete)" },
+  { "<D-S-f>", "Rechercher dans le projet" },
+  { "<D-S-r>", "Remplacer dans le projet" },
+  { "<C-e>", "Panneau d'erreurs (Trouble)" },
+  { "<C-r> / <C-d>", "Run / Debug" },
+  { "<C-b>", "Point d'arret" },
+  { "<D-1>", "Explorateur (neo-tree)" },
+  { "<D-9>", "Lazygit" },
+  { "<D-t>", "Terminal flottant" },
+  { "<Leader>uB", "Toggle git blame" },
+  { "<A-Bas> / <A-Haut>", "Fonction suivante / precedente" },
+  { "]] / [[", "Classe / impl suivant / precedent" },
+  { "gS", "Split / join arguments" },
+  { "<Leader>ux", "Toggle bandeau de scope" },
+  { "<C-g>", "Multi-curseur sur le mot" },
+  { "s", "Flash : sauter n'importe ou" },
+  { "<Leader>m", "Cheatsheet des DEPLACEMENTS" },
+}
+
+local per_ft = {
+  rust = {
+    { "K", "Hover + actions" },
+    { "<Leader>lm", "Expand macro" },
+    { "<Leader>le", "Expliquer l'erreur" },
+    { "<Leader>lc", "Ouvrir Cargo.toml" },
+    { "<Leader>lp", "Module parent" },
+    { "<Leader>lo", "docs.rs du symbole" },
+    { "<Leader>lr", "Search/replace structurel" },
+    { "<Leader>lt", "Arbre syntaxique" },
+    { "<Leader>lk / lj", "Monter / descendre l'item" },
+  },
+  cs = {
+    { "<C-d>", "Debug / attach Unity" },
+    { "<D-.>", "Code actions" },
+    { "<C-S-r>", "Renommer" },
+    { "<D-j>", "Doc au survol" },
+    { "<D-u>", "Trouver les usages" },
+    { "<D-b>", "Aller a la definition" },
+  },
+  python = {
+    { "<C-r>", "Lancer le fichier" },
+    { "<C-d>", "Debug (methode de test)" },
+    { "<Leader>lv", "Choisir le venv" },
+  },
+  c = { { "<C-d>", "Debugger (codelldb)" }, { "<D-.>", "Code actions" }, { "<C-S-r>", "Renommer" } },
+  lua = { { "<C-r>", "Executer le fichier (luafile)" }, { "<D-j>", "Doc au survol" } },
+}
+
+local function cargo_extra()
+  return {
+    { "<Leader>lv", "Versions de la dependance" },
+    { "<Leader>lf", "Features" },
+    { "<Leader>lu / lU", "Update (dep / tout)" },
+    { "<Leader>lg / lG", "Upgrade (dep / tout)" },
+    { "<Leader>lo", "Doc de la dependance" },
+  }
+end
+
+local movement = {
+  {
+    "Mot / ligne / fichier",
+    {
+      { "<C-←> / <C-→>", "Mot precedent / suivant" },
+      { "<A-←> / <A-→>", "Mot precedent / suivant" },
+      { "<D-←> / <D-→>", "Debut / fin de ligne" },
+      { "<D-↑> / <D-↓>", "Debut / fin du fichier" },
+    },
+  },
+  {
+    "Dans le code",
+    {
+      { "<A-Bas> / <A-Haut>", "Fonction suivante / precedente" },
+      { "]] / [[", "Classe / impl suivant / precedent" },
+      { "[x", "Remonter au scope parent" },
+    },
+  },
+  {
+    "Sauter / chercher",
+    {
+      { "s", "Flash : sauter n'importe ou a l'ecran" },
+      { "n / N", "Occurrence de recherche suiv. / prec." },
+      { "* / #", "Chercher le mot sous le curseur" },
+      { "<D-g> / <D-S-g>", "Occurrence du mot (illuminate)" },
+    },
+  },
+  {
+    "Naviguer le code (LSP)",
+    {
+      { "<D-b>", "Aller a la definition" },
+      { "gD", "Aller a la declaration" },
+      { "<D-S-i>", "Aller a l'implementation" },
+      { "<C-S-b>", "Aller au type" },
+      { "<D-u>", "Usages / references" },
+      { "<D-[> / <D-]>", "Reculer / avancer (historique)" },
+      { "<D-7>", "Structure du fichier (symboles)" },
+    },
+  },
+  {
+    "Problemes / git",
+    {
+      { "]d / [d", "Probleme suivant / precedent" },
+      { "]g / [g", "Modif git suivante / precedente" },
+    },
+  },
+  {
+    "Fichiers / buffers / fenetres",
+    {
+      { "<D-o> / <D-e>", "Aller a un fichier / recents" },
+      { "<D-S-[> / <D-S-]>", "Buffer precedent / suivant" },
+      { "<D-w>", "Fermer le buffer" },
+      { "<D-n>", "Nouveau fichier" },
+      { "<Leader>bb", "Choisir un buffer dans la liste" },
+      { "<C-h/j/k/l>", "Se deplacer entre les fenetres" },
+      { "<C-Tab> / <C-S-Tab>", "Fenetre suivante / precedente" },
+    },
+  },
+}
+
+local PAD = 20
+
+local function render(title, sections)
+  local lines, hl = {}, {}
+  local function add(s, group)
+    lines[#lines + 1] = s
+    hl[#lines] = group
+  end
+  add("  🌸  " .. title .. "  🌸", "Header")
+  for _, sec in ipairs(sections) do
+    add("", nil)
+    add("  " .. sec[1], "Title")
+    for _, m in ipairs(sec[2]) do
+      add(string.format("   %-" .. PAD .. "s %s", m[1], m[2]), "Entry")
+    end
+  end
+  add("", nil)
+  add("   q / <Esc> pour fermer", "Dim")
+  return lines, hl
+end
+
+local function show(title, sections)
+  local lines, hl = render(title, sections)
+  local width = 0
+  for _, l in ipairs(lines) do width = math.max(width, vim.fn.strdisplaywidth(l)) end
+  width = width + 3
+
+  local buf = vim.api.nvim_create_buf(false, true)
+  vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
+
+  vim.api.nvim_set_hl(0, "CheatBorder", { fg = "#ff4fd8", bg = "NONE" })
+  vim.api.nvim_set_hl(0, "CheatTitle", { fg = "#ff7eb6", bold = true })
+  vim.api.nvim_set_hl(0, "CheatHeader", { fg = "#ff4fd8", bold = true })
+  vim.api.nvim_set_hl(0, "CheatKey", { fg = "#c14fff", bold = true })
+  vim.api.nvim_set_hl(0, "CheatDim", { fg = "#8a7a90", italic = true })
+
+  local ns = vim.api.nvim_create_namespace "cheatsheet"
+  local function add_hl(line, group, col_end)
+    vim.api.nvim_buf_set_extmark(buf, ns, line, 0, { end_col = col_end, hl_group = group })
+  end
+  for i, group in pairs(hl) do
+    local line = i - 1
+    local eol = #lines[i]
+    if group == "Header" then
+      add_hl(line, "CheatHeader", eol)
+    elseif group == "Title" then
+      add_hl(line, "CheatTitle", eol)
+    elseif group == "Dim" then
+      add_hl(line, "CheatDim", eol)
+    elseif group == "Entry" then
+      add_hl(line, "CheatKey", math.min(3 + PAD, eol))
+    end
+  end
+
+  local height = math.min(#lines, vim.o.lines - 4)
+  local win = vim.api.nvim_open_win(buf, true, {
+    relative = "editor",
+    width = width,
+    height = height,
+    row = math.floor((vim.o.lines - height) / 2 - 1),
+    col = math.floor((vim.o.columns - width) / 2),
+    style = "minimal",
+    border = "rounded",
+    title = " cheatsheet ",
+    title_pos = "center",
+  })
+  vim.wo[win].winhighlight = "FloatBorder:CheatBorder,FloatTitle:CheatHeader,Normal:Normal"
+  vim.wo[win].cursorline = false
+  vim.bo[buf].modifiable = false
+  vim.bo[buf].bufhidden = "wipe"
+  for _, key in ipairs { "q", "<Esc>" } do
+    vim.keymap.set("n", key, "<Cmd>close<CR>", { buffer = buf, nowait = true, silent = true })
+  end
+end
+
+local function open_cheatsheet()
+  local ft = vim.bo.filetype
+  local fname = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ":t")
+  local sections = { { "Partout", core } }
+  if fname == "Cargo.toml" then
+    sections[#sections + 1] = { "Ici ( Cargo.toml )", cargo_extra() }
+  elseif per_ft[ft] then
+    sections[#sections + 1] = { "Ici ( " .. ft .. " )", per_ft[ft] }
+  end
+  show("Raccourcis", sections)
+end
+
+local function open_movement() show("Deplacements", movement) end
+
+---@type LazySpec
+return {
+  "AstroNvim/astrocore",
+  opts = {
+    commands = {
+      Cheatsheet = { open_cheatsheet, desc = "Raccourcis pertinents (contextuel)" },
+      Deplacements = { open_movement, desc = "Cheatsheet des deplacements" },
+    },
+    mappings = {
+      n = {
+        ["<Leader>?"] = { open_cheatsheet, desc = "Mes raccourcis (contextuel)" },
+        ["<D-?>"] = { open_cheatsheet, desc = "Mes raccourcis (contextuel)" },
+        ["<Leader>m"] = { open_movement, desc = "Cheatsheet des deplacements" },
+      },
+    },
+  },
+}

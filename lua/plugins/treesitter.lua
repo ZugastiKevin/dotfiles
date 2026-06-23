@@ -20,6 +20,8 @@ return {
         "swift",
         "json",
         "toml",
+        "hlsl",
+        "glsl",
       },
     },
   },

@@ -17,13 +17,30 @@ return {
       disabled = {},
       timeout_ms = 1000,
     },
-    servers = { "basedpyright", "clangd", "csharp_ls", "asm_lsp" },
+    servers = { "basedpyright", "clangd", "asm_lsp", "glsl_analyzer" },
     config = {
       rust_analyzer = {
         settings = {
           ["rust-analyzer"] = {
-            check = { command = "check" },
+            check = { command = "clippy" },
             checkOnSave = true,
+            completion = {
+              autoimport = { enable = true },
+              autoself = { enable = true },
+            },
+            imports = {
+              granularity = { group = "module" },
+              prefix = "self",
+            },
+          },
+        },
+      },
+      basedpyright = {
+        settings = {
+          basedpyright = {
+            analysis = {
+              autoImportCompletions = true,
+            },
           },
         },
       },

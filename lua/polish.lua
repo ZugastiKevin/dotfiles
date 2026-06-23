@@ -1,3 +1,14 @@
+vim.filetype.add {
+  extension = {
+    ui = function(_, bufnr)
+      for _, line in ipairs(vim.api.nvim_buf_get_lines(bufnr, 0, 30, false)) do
+        if line:match "^%s*<%?xml" or line:match "^%s*<%a" then return "xml" end
+      end
+      return "hytaleui"
+    end,
+  },
+}
+
 local extra_path = { vim.fn.expand "~/.cargo/bin", "/opt/homebrew/bin", "/opt/homebrew/sbin" }
 for _, p in ipairs(extra_path) do
   if not string.find(":" .. (vim.env.PATH or "") .. ":", ":" .. p .. ":", 1, true) then
@@ -20,8 +31,7 @@ if vim.g.neovide then
   vim.g.neovide_cursor_animate_in_insert_mode = true
   vim.g.neovide_cursor_animate_command_line = true
   math.randomseed((vim.uv or vim.loop).hrtime())
-  local vfx_modes = { "railgun", "pixiedust", "torpedo", "sonicboom", "ripple" }
-  vim.g.neovide_cursor_vfx_mode = vfx_modes[math.random(#vfx_modes)]
+  vim.g.neovide_cursor_vfx_mode = "railgun"
   vim.g.neovide_cursor_vfx_particle_lifetime = 1.4
   vim.g.neovide_cursor_vfx_particle_density = 12.0
   vim.g.neovide_cursor_vfx_particle_speed = 12.0
@@ -52,10 +62,16 @@ vim.api.nvim_create_autocmd("VimEnter", {
   end,
 })
 
-vim.ui.input = function(...) return require("snacks").input(...) end
-vim.ui.select = function(...) return require("snacks").picker.select(...) end
+vim.ui.input = require("snacks").input.input
+vim.ui.select = require("snacks").picker.select
 
 pcall(function() require("girly").setup() end)
+
+vim.api.nvim_create_autocmd("User", {
+  pattern = "VeryLazy",
+  once = true,
+  callback = function() pcall(function() require("anim_control").register() end) end,
+})
 
 local function float_open()
   for _, w in ipairs(vim.api.nvim_list_wins()) do
@@ -63,20 +79,6 @@ local function float_open()
   end
   return false
 end
-
-local function graphics_term()
-  if vim.g.neovide then return false end
-  local prog = (vim.env.TERM_PROGRAM or ""):lower()
-  local term = (vim.env.TERM or ""):lower()
-  return prog == "ghostty"
-    or prog == "wezterm"
-    or term:find "ghostty"
-    or term:find "kitty"
-    or vim.env.KITTY_WINDOW_ID ~= nil
-end
-
-if not graphics_term() then pcall(function() require("cat").setup() end) end
-pcall(function() require("sysinfo").setup() end)
 
 vim.api.nvim_create_autocmd("FileChangedShell", {
   desc = "Recharger sans demander quand le fichier change en dehors",

@@ -11,6 +11,9 @@ return {
     opts.completion.list = opts.completion.list or {}
     opts.completion.list.selection = { preselect = true, auto_insert = false }
 
+    opts.completion.ghost_text = opts.completion.ghost_text or {}
+    opts.completion.ghost_text.enabled = true
+
     return opts
   end,
 }

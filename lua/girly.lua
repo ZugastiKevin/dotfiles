@@ -8,10 +8,10 @@ M.themes = {
   neon = {
     label = "Neon",
     bg = "#0c0910", bg_alt = "#090610", float = "#100a16", cursorline = "#1c1126",
-    linenr = "#5a4368", visual = "#3a1f44", punct = "#c79fd0", delim = "#9a86a8",
-    txt = "#f3d4ec", comment = "#8a7596",
-    func = "#ff6ec7", kw = "#b98aff", typ = "#ff9e80", str = "#ffd479",
-    num = "#ffae57", prop = "#ff9ad4", param = "#ffc6ec", op = "#ff79c6",
+    linenr = "#6a5078", visual = "#3a1f44", punct = "#cba3e0", delim = "#9a86a8",
+    txt = "#f2e8f5", comment = "#9a82a8",
+    func = "#ff5eb4", kw = "#c89bff", typ = "#ff9e6b", str = "#ffe06a",
+    num = "#ffac4d", prop = "#f59bff", param = "#ffbce6", op = "#ff2d95",
   },
   pastel = {
     label = "Pastel",
@@ -64,6 +64,7 @@ M.themes = {
 }
 
 M.current = "neon"
+M.base = "catppuccin"
 
 local function read_choice()
   local f = io.open(statefile, "r")
@@ -80,6 +81,12 @@ local function write_choice(name)
     f:write(name)
     f:close()
   end
+end
+
+function M.resolve()
+  M.current = read_choice() or "neon"
+  if not M.themes[M.current] then M.current = "neon" end
+  return M.current
 end
 
 function M.apply(name)
@@ -208,6 +215,14 @@ function M.apply(name)
   for g, o in pairs(groups) do h(g, o) end
 end
 
+function M.set(name)
+  if not M.themes[name] then return end
+  write_choice(name)
+  M.current = name
+  pcall(vim.cmd.colorscheme, "girlypop")
+  vim.notify("Theme : " .. M.themes[name].label)
+end
+
 function M.pick()
   local items = {}
   for _, n in ipairs(M.order) do
@@ -217,27 +232,15 @@ function M.pick()
     prompt = "Theme girly :",
     format_item = function(n) return M.themes[n].label end,
   }, function(choice)
-    if choice then
-      M.apply(choice)
-      write_choice(choice)
-      vim.notify("Theme : " .. M.themes[choice].label)
-    end
+    if choice then M.set(choice) end
   end)
 end
 
 function M.setup()
-  M.current = read_choice() or "neon"
-  if not M.themes[M.current] then M.current = "neon" end
-  vim.api.nvim_create_autocmd("ColorScheme", {
-    desc = "Girly theme overrides",
-    callback = function() M.apply(M.current) end,
-  })
-  M.apply(M.current)
+  M.resolve()
   vim.api.nvim_create_user_command("GirlyTheme", function(o)
     if o.args ~= "" and M.themes[o.args] then
-      M.apply(o.args)
-      write_choice(o.args)
-      vim.notify("Theme : " .. M.themes[o.args].label)
+      M.set(o.args)
     else
       M.pick()
     end

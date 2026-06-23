@@ -33,6 +33,8 @@ return {
         visible = true,
         hide_dotfiles = false,
         hide_gitignored = true,
+        never_show = { ".DS_Store" },
+        never_show_by_pattern = { "*.meta", "*.asset" },
       },
     },
   },

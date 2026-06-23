@@ -1,9 +1,12 @@
 ---@type LazySpec
 return {
   {
+    "AmberLehmann/candyland.nvim",
+    lazy = true,
+  },
+  {
     "maxmx03/fluoromachine.nvim",
-    lazy = false,
-    priority = 1000,
+    lazy = true,
     config = function()
       local ok, fm = pcall(require, "fluoromachine")
       if ok then

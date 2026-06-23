@@ -3,7 +3,7 @@ return {
   "AstroNvim/astroui",
   ---@type AstroUIOpts
   opts = {
-    colorscheme = "catppuccin",
+    colorscheme = "girlypop",
     icons = {
       LSPLoading1 = "⠋",
       LSPLoading2 = "⠙",

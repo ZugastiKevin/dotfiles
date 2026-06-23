@@ -3,12 +3,29 @@ local function pick(method) return function() require("snacks").picker[method]()
 
 local function run_or_debug(kind)
   return function()
-    if vim.bo.filetype == "rust" then
+    local ft = vim.bo.filetype
+    if ft == "rust" then
       pcall(vim.cmd.RustLsp, kind == "debug" and "debuggables" or "runnables")
-    elseif kind == "debug" then
-      dap().continue()
+      return
+    end
+    if kind == "debug" then
+      if ft == "python" then
+        pcall(function() require("dap-python").test_method() end)
+      else
+        dap().continue()
+      end
+      return
+    end
+    if ft == "python" then
+      vim.cmd("TermExec direction=horizontal cmd='python3 " .. vim.fn.shellescape(vim.fn.expand "%") .. "'")
+    elseif ft == "lua" then
+      vim.cmd "luafile %"
+    elseif ft == "cs" then
+      vim.notify("C# : lance le jeu depuis Unity (Play). <C-d> pour debug/attach.", vim.log.levels.INFO)
+    elseif ft == "c" or ft == "cpp" then
+      vim.notify("C/C++ : <C-d> pour debugger (codelldb).", vim.log.levels.INFO)
     else
-      vim.notify("Run: configure pour Rust", vim.log.levels.INFO)
+      vim.notify("Run non configure pour '" .. ft .. "'", vim.log.levels.INFO)
     end
   end
 end
@@ -22,12 +39,12 @@ return {
       large_buf = { size = 1024 * 256, lines = 10000 },
       autopairs = true,
       cmp = true,
-      diagnostics = { virtual_text = true, virtual_lines = false },
+      diagnostics = { virtual_text = false, virtual_lines = false },
       highlighturl = true,
       notifications = true,
     },
     diagnostics = {
-      virtual_text = true,
+      virtual_text = false,
       underline = true,
     },
     options = {
@@ -83,19 +100,25 @@ return {
         ["<D-l>"] = { ":", desc = "Go to line" },
 
         ["<D-1>"] = { "<Cmd>Neotree toggle<CR>", desc = "Project tool window" },
-        ["<D-9>"] = { function() require("snacks").lazygit() end, desc = "Lazygit" },
+        ["<D-9>"] = {
+          function()
+            local snacks = require "snacks"
+            local buf = vim.api.nvim_buf_get_name(0)
+            local root = snacks.git.get_root(buf ~= "" and buf or nil) or snacks.git.get_root(vim.fn.getcwd())
+            if root then
+              snacks.lazygit { cwd = root }
+            else
+              vim.notify("Lazygit : pas dans un depot git", vim.log.levels.WARN)
+            end
+          end,
+          desc = "Lazygit",
+        },
         ["<D-t>"] = { "<Cmd>1ToggleTerm direction=float<CR>", desc = "Terminal flottant" },
         ["<C-t>"] = { "<Cmd>1ToggleTerm direction=float<CR>", desc = "Terminal flottant" },
         ["<D-S-t>"] = { "<Cmd>2ToggleTerm direction=horizontal size=14<CR>", desc = "Terminal en bas" },
         ["<C-Tab>"] = { "<C-w>w", desc = "Fenetre suivante (rotation)" },
         ["<C-S-Tab>"] = { "<C-w>W", desc = "Fenetre precedente" },
 
-        ["<C-S-a>"] = { function() require("harpoon"):list():add() end, desc = "Harpoon: epingler" },
-        ["<C-e>"] = { function() local h = require "harpoon"; h.ui:toggle_quick_menu(h:list()) end, desc = "Harpoon: menu" },
-        ["<C-1>"] = { function() require("harpoon"):list():select(1) end, desc = "Harpoon 1" },
-        ["<C-2>"] = { function() require("harpoon"):list():select(2) end, desc = "Harpoon 2" },
-        ["<C-3>"] = { function() require("harpoon"):list():select(3) end, desc = "Harpoon 3" },
-        ["<C-4>"] = { function() require("harpoon"):list():select(4) end, desc = "Harpoon 4" },
         ["<D-S-r>"] = { "<Cmd>GrugFar<CR>", desc = "Remplacer dans le projet" },
         ["<D-g>"] = { function() require("illuminate").goto_next_reference(true) end, desc = "Occurrence suivante" },
         ["<D-S-g>"] = { function() require("illuminate").goto_prev_reference(true) end, desc = "Occurrence precedente" },
