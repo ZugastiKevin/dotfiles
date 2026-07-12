@@ -16,6 +16,35 @@ local function unity_project_path()
   end
 end
 
+local synced_projects = {}
+local function unity_root_of(file)
+  local dir = vim.fn.fnamemodify(file, ":h")
+  while dir and dir ~= "/" do
+    if vim.fn.isdirectory(dir .. "/Assets") == 1 and vim.fn.filereadable(dir .. "/Packages/manifest.json") == 1 then
+      return dir
+    end
+    dir = vim.fn.fnamemodify(dir, ":h")
+  end
+  return nil
+end
+
+local function ensure_unity_nvim_pkg()
+  local root = unity_project_path()
+  if root == "" then return end
+  local manifest = root .. "/Packages/manifest.json"
+  if vim.fn.filereadable(manifest) == 0 then return end
+  if table.concat(vim.fn.readfile(manifest), "\n"):find("com.walcht.ide.neovim", 1, true) then return end
+  vim.system({ vim.fn.expand "~/.local/bin/unity-nvim", root }, { text = true }, function()
+    vim.schedule(function()
+      vim.notify(
+        "Package Neovim ajoute au projet Unity — dans Unity: Regenerate project files",
+        vim.log.levels.INFO,
+        { title = "Unity" }
+      )
+    end)
+  end)
+end
+
 local function unity_endpoint()
   local probe = vstuc_bin .. "UnityAttachProbe.dll"
   if vim.fn.filereadable(probe) == 0 then return "" end
@@ -85,15 +114,6 @@ end
 ---@type LazySpec
 return {
   {
-    "nvim-treesitter/nvim-treesitter",
-    optional = true,
-    opts = function(_, opts)
-      if opts.ensure_installed ~= "all" then
-        opts.ensure_installed = require("astrocore").list_insert_unique(opts.ensure_installed, { "c_sharp" })
-      end
-    end,
-  },
-  {
     "mfussenegger/nvim-dap",
     optional = true,
     config = configure_dap,
@@ -103,18 +123,61 @@ return {
     ---@type AstroCoreOpts
     opts = {
       autocmds = {
+        unity_csproj_sync = {
+          {
+            event = { "BufWritePost", "BufReadPost" },
+            pattern = "*.cs",
+            desc = "Ajoute le .cs au bon .csproj Unity (roslyn le voit sans regen Unity)",
+            callback = function(args)
+              local file = vim.api.nvim_buf_get_name(args.buf)
+              if file == "" or not file:find("/Assets/", 1, true) then return end
+              if args.event == "BufReadPost" then
+                local root = unity_root_of(file)
+                if not root or synced_projects[root] then return end
+                synced_projects[root] = true
+                vim.system(
+                  { vim.fn.expand "~/.local/bin/unity-csproj-sync-all", root },
+                  { text = true },
+                  function(res)
+                    local n = res.stdout and tonumber(res.stdout:match "synced (%d+)")
+                    if n and n > 0 then
+                      vim.schedule(function()
+                        vim.notify(n .. " fichier(s) ajoute(s) aux .csproj Unity — roslyn recharge", vim.log.levels.INFO, { title = "Unity" })
+                      end)
+                    end
+                  end
+                )
+              else
+                vim.system(
+                  { vim.fn.expand "~/.local/bin/unity-csproj-sync", file },
+                  { text = true },
+                  function(res)
+                    if res.stdout and res.stdout:find("added", 1, true) then
+                      vim.schedule(function()
+                        vim.notify("Ajoute au .csproj Unity — roslyn recharge tout seul", vim.log.levels.INFO, { title = "Unity" })
+                      end)
+                    end
+                  end
+                )
+              end
+            end,
+          },
+        },
         csharp_keymaps = {
           {
             event = "FileType",
             pattern = "cs",
             desc = "Keymaps C# (.NET / Unity)",
             callback = function(args)
+              pcall(ensure_unity_nvim_pkg)
               local function map(lhs, rhs, desc, mode)
                 vim.keymap.set(mode or "n", lhs, rhs, { buffer = args.buf, silent = true, desc = desc })
               end
               map("<Leader>lR", function() require("dap").continue() end, "C#: lancer / debug (choisir config)")
-              map("<C-r>", function() require("dap").continue() end, "Run / Debug (.NET / Unity)")
-              map("<C-d>", function() require("dap").continue() end, "Run / Debug (.NET / Unity)")
+              map("<Leader>lr", function()
+                vim.cmd "LspRestart"
+                vim.notify("roslyn relance — indexation ~1-2 min (regarde fidget)", vim.log.levels.INFO, { title = "Unity" })
+              end, "C#: relancer roslyn (re-indexer la solution)")
               map("<Leader>lo", function() vim.lsp.buf.code_action { context = { only = { "source.organizeImports" } }, apply = true } end, "C#: organiser les usings")
             end,
           },

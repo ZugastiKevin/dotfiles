@@ -43,14 +43,28 @@ return {
       },
       presets = {
         pulsar = {
-          enabled = true,
-          on_event = { "WinEnter", "BufEnter", "CmdlineLeave" },
+          enabled = false,
+          on_event = { "WinEnter", "BufEnter" },
           default_animation = {
             name = "fade",
             settings = { from_color = "#ff4fd8", to_color = "Normal", max_duration = 600, min_duration = 600 },
           },
         },
       },
+    },
+  },
+  {
+    "AstroNvim/astrocore",
+    opts = {
+      autocmds = {
+        highlightyank = false,
+      },
+    },
+  },
+  {
+    "gbprod/yanky.nvim",
+    opts = {
+      highlight = { on_yank = false },
     },
   },
 }

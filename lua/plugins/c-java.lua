@@ -88,7 +88,6 @@ return {
             callback = function(args)
               local buf = args.buf
               buf_map(buf, "<Leader>lh", "<Cmd>ClangdSwitchSourceHeader<CR>", "Basculer header/source")
-              buf_map(buf, "<A-o>", "<Cmd>ClangdSwitchSourceHeader<CR>", "Basculer header/source")
               buf_map(buf, "<Leader>lb", "<Cmd>CMakeBuild<CR>", "CMake: build")
               buf_map(buf, "<Leader>lr", "<Cmd>CMakeRun<CR>", "CMake: run")
               buf_map(buf, "<Leader>lD", "<Cmd>CMakeDebug<CR>", "CMake: debug")

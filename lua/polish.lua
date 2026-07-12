@@ -6,6 +6,7 @@ vim.filetype.add {
       end
       return "hytaleui"
     end,
+    purr = "purr",
   },
 }
 
@@ -18,10 +19,10 @@ end
 
 if vim.g.neovide then
   vim.o.guifont = "JetBrainsMono Nerd Font:h14"
-  vim.g.neovide_padding_top = 6
-  vim.g.neovide_padding_bottom = 6
-  vim.g.neovide_padding_left = 6
-  vim.g.neovide_padding_right = 6
+  vim.g.neovide_padding_top = 10
+  vim.g.neovide_padding_bottom = 10
+  vim.g.neovide_padding_left = 14
+  vim.g.neovide_padding_right = 14
   vim.g.neovide_floating_blur_amount_x = 2.0
   vim.g.neovide_floating_blur_amount_y = 2.0
   vim.g.neovide_floating_shadow = true
@@ -37,10 +38,22 @@ if vim.g.neovide then
   vim.g.neovide_cursor_vfx_particle_speed = 12.0
   vim.g.neovide_cursor_vfx_opacity = 220.0
   vim.g.neovide_scroll_animation_length = 0.2
+  vim.g.neovide_scroll_animation_far_lines = 1
   vim.g.neovide_refresh_rate = 120
   vim.g.neovide_window_blurred = true
   vim.g.neovide_input_macos_option_key_is_meta = "both"
-  vim.g.neovide_input_macos_alt_is_meta = true
+
+  vim.g.neovide_cursor_smooth_blink = true
+  vim.g.neovide_position_animation_length = 0.15
+  vim.g.neovide_floating_corner_radius = 0.35
+  vim.g.neovide_opacity = 0.92
+  vim.g.neovide_normal_opacity = 0.92
+  vim.g.neovide_unsaved_buffer_opacity = 0.78
+  vim.g.neovide_light_angle_degrees = 40
+  vim.g.neovide_light_radius = 6
+  vim.g.neovide_hide_mouse_when_typing = true
+  vim.g.neovide_underline_stroke_scale = 1.4
+  vim.g.neovide_theme = "dark"
 
   local trail_colors = {
     "#ff4fd8", "#c14fff", "#ff6ac1", "#ff7eb6", "#ff5d8f",
@@ -70,7 +83,10 @@ pcall(function() require("girly").setup() end)
 vim.api.nvim_create_autocmd("User", {
   pattern = "VeryLazy",
   once = true,
-  callback = function() pcall(function() require("anim_control").register() end) end,
+  callback = function()
+    pcall(function() require("anim_control").register() end)
+    pcall(function() require("editor_toggles").register() end)
+  end,
 })
 
 local function float_open()
@@ -119,3 +135,13 @@ vim.api.nvim_create_autocmd("CursorHold", {
     end)
   end,
 })
+
+do
+  local inlay_hint_ns = vim.api.nvim_create_namespace "nvim.lsp.inlayhint"
+  local set_extmark = vim.api.nvim_buf_set_extmark
+  vim.api.nvim_buf_set_extmark = function(buffer, ns, line, col, opts)
+    if ns ~= inlay_hint_ns then return set_extmark(buffer, ns, line, col, opts) end
+    local ok, result = pcall(set_extmark, buffer, ns, line, col, opts)
+    if ok then return result end
+  end
+end

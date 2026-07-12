@@ -90,4 +90,25 @@ return {
       })
     end,
   },
+  {
+    "jay-babu/project.nvim",
+    opts = {
+      detection_methods = { "pattern", "lsp" },
+      patterns = {
+        "ProjectSettings",
+        "Assets",
+        "*.slnx",
+        "*.sln",
+        ".git",
+        "Cargo.toml",
+        "package.json",
+        "go.mod",
+        "Makefile",
+        "Package.swift",
+        "*.xcodeproj",
+        "build.gradle",
+      },
+      scope_chdir = "global",
+    },
+  },
 }

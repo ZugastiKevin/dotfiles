@@ -29,7 +29,6 @@ return {
   { import = "astrocommunity.scrolling.satellite-nvim" },
   { import = "astrocommunity.scrolling.neoscroll-nvim" },
   { import = "astrocommunity.project.project-nvim" },
-  { import = "astrocommunity.media.neocord-nvim" },
   { import = "astrocommunity.color.twilight-nvim" },
   { import = "astrocommunity.quickfix.nvim-bqf" },
   { import = "astrocommunity.code-runner.overseer-nvim" },

@@ -20,10 +20,6 @@ local function run_or_debug(kind)
       vim.cmd("TermExec direction=horizontal cmd='python3 " .. vim.fn.shellescape(vim.fn.expand "%") .. "'")
     elseif ft == "lua" then
       vim.cmd "luafile %"
-    elseif ft == "cs" then
-      vim.notify("C# : lance le jeu depuis Unity (Play). <C-d> pour debug/attach.", vim.log.levels.INFO)
-    elseif ft == "c" or ft == "cpp" then
-      vim.notify("C/C++ : <C-d> pour debugger (codelldb).", vim.log.levels.INFO)
     else
       vim.notify("Run non configure pour '" .. ft .. "'", vim.log.levels.INFO)
     end
@@ -122,13 +118,6 @@ return {
         ["<D-S-r>"] = { "<Cmd>GrugFar<CR>", desc = "Remplacer dans le projet" },
         ["<D-g>"] = { function() require("illuminate").goto_next_reference(true) end, desc = "Occurrence suivante" },
         ["<D-S-g>"] = { function() require("illuminate").goto_prev_reference(true) end, desc = "Occurrence precedente" },
-        ["<Leader>uo"] = {
-          function()
-            vim.g.auto_doc = (vim.g.auto_doc == false)
-            vim.notify("Doc auto au survol : " .. (vim.g.auto_doc == false and "OFF" or "ON"))
-          end,
-          desc = "Toggle doc auto au survol",
-        },
         ["<Leader>uT"] = { "<Cmd>Twilight<CR>", desc = "Twilight (focus bloc courant)" },
         ["<Leader>uG"] = { "<Cmd>GirlyTheme<CR>", desc = "Choisir un theme girly" },
 
@@ -151,6 +140,8 @@ return {
 
         ["<D-s>"] = { "<Cmd>w<CR>", desc = "Save" },
         ["<D-a>"] = { "ggVG", desc = "Select all" },
+        ["<D-v>"] = { '"+p', desc = "Paste" },
+        ["<D-.>"] = { function() vim.lsp.buf.code_action() end, desc = "Quick fix / code action" },
         ["<D-z>"] = { "u", desc = "Undo" },
         ["<D-S-z>"] = { "<C-r>", desc = "Redo" },
         ["<D-d>"] = { "yyp", desc = "Duplicate line" },
@@ -162,9 +153,10 @@ return {
         ["<C-S-Down>"] = { "<Cmd>m .+1<CR>==", desc = "Move line down" },
         ["<C-S-Up>"] = { "<Cmd>m .-2<CR>==", desc = "Move line up" },
 
-        ["<C-r>"] = { run_or_debug "run", desc = "Run app (Rust)" },
-        ["<C-d>"] = { run_or_debug "debug", desc = "Debug app (Rust)" },
-        ["<C-b>"] = { function() dap().toggle_breakpoint() end, desc = "Point d'arret" },
+        ["<Leader>r"] = { desc = "Run / Debug" },
+        ["<Leader>rr"] = { run_or_debug "run", desc = "Run" },
+        ["<Leader>rd"] = { run_or_debug "debug", desc = "Debug" },
+        ["<Leader>rb"] = { function() dap().toggle_breakpoint() end, desc = "Point d'arret" },
         ["<C-S-c>"] = { function() dap().continue() end, desc = "Debug: continuer / resume" },
         ["<C-S-o>"] = { function() dap().step_over() end, desc = "Debug: step over" },
         ["<C-S-n>"] = { function() dap().step_into() end, desc = "Debug: step into" },

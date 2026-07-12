@@ -9,7 +9,6 @@ local state = {
   indent = true,
   beacon = true,
   fidget = true,
-  minimap = false,
 }
 
 local function apply(key)
@@ -44,14 +43,9 @@ local function apply(key)
       if on then s.indent.enable() else s.indent.disable() end
     end)
   elseif key == "beacon" then
-    vim.g.beacon_enable = on and 1 or 0
+    pcall(function() require("beacon").config.enabled = on end)
   elseif key == "fidget" then
     pcall(function() require("fidget.progress").suppress(not on) end)
-  elseif key == "minimap" then
-    pcall(function()
-      local m = require "mini.map"
-      if on then m.open() else m.close() end
-    end)
   end
 end
 
@@ -64,7 +58,6 @@ local items = {
   { key = "indent", map = "n", label = "Guides d'indentation" },
   { key = "beacon", map = "b", label = "Beacon (flash de saut)" },
   { key = "fidget", map = "f", label = "Fidget (progression LSP)" },
-  { key = "minimap", map = "m", label = "Minimap" },
 }
 
 local cursor_vfx_modes = { "railgun", "torpedo", "pixiedust", "sonicboom", "ripple", "wireframe", "" }

@@ -7,7 +7,7 @@ return {
       max_lines = 3,
       multiline_threshold = 1,
       trim_scope = "outer",
-      mode = "cursor",
+      mode = "topline",
       separator = "─",
       zindex = 20,
     },

@@ -15,7 +15,8 @@ return {
         default_settings = {
           ["rust-analyzer"] = {
             check = { command = "clippy" },
-            completion = { autoimport = { enable = true } },
+            checkOnSave = true,
+            completion = { autoimport = { enable = true }, autoself = { enable = true } },
             imports = { granularity = { group = "module" }, prefix = "self" },
           },
         },

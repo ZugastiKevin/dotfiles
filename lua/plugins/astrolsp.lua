@@ -14,41 +14,12 @@ return {
         allow_filetypes = {},
         ignore_filetypes = {},
       },
-      disabled = {},
+      disabled = { "roslyn" },
       timeout_ms = 1000,
     },
-    servers = { "basedpyright", "clangd", "asm_lsp", "glsl_analyzer" },
     config = {
-      rust_analyzer = {
-        settings = {
-          ["rust-analyzer"] = {
-            check = { command = "clippy" },
-            checkOnSave = true,
-            completion = {
-              autoimport = { enable = true },
-              autoself = { enable = true },
-            },
-            imports = {
-              granularity = { group = "module" },
-              prefix = "self",
-            },
-          },
-        },
-      },
-      basedpyright = {
-        settings = {
-          basedpyright = {
-            analysis = {
-              autoImportCompletions = true,
-            },
-          },
-        },
-      },
       sourcekit = {
         filetypes = { "swift" },
-      },
-      clangd = {
-        filetypes = { "c", "cpp", "objc", "objcpp", "cuda" },
       },
     },
     autocmds = {
@@ -129,8 +100,20 @@ return {
           desc = "Go to symbol (project)",
           cond = "workspace/symbol",
         },
-        ["]d"] = { function() vim.diagnostic.jump { count = 1, float = true } end, desc = "Probleme suivant" },
-        ["[d"] = { function() vim.diagnostic.jump { count = -1, float = true } end, desc = "Probleme precedent" },
+        ["]d"] = {
+          function()
+            vim.diagnostic.jump { count = 1 }
+            vim.diagnostic.open_float { focus = false, scope = "cursor", border = "rounded" }
+          end,
+          desc = "Probleme suivant",
+        },
+        ["[d"] = {
+          function()
+            vim.diagnostic.jump { count = -1 }
+            vim.diagnostic.open_float { focus = false, scope = "cursor", border = "rounded" }
+          end,
+          desc = "Probleme precedent",
+        },
         ["<C-S-d>"] = { function() vim.diagnostic.open_float() end, desc = "Detail du probleme" },
 
         ["<Leader>uH"] = {

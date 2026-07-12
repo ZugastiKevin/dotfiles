@@ -20,6 +20,8 @@ return {
         "clang-format",
         "tree-sitter-cli",
         "debugpy",
+        "roslyn",
+        "csharpier",
       },
     },
   },

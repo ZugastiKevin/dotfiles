@@ -7,7 +7,6 @@ return {
     warn_no_results = false,
   },
   keys = {
-    { "<C-e>", "<Cmd>Trouble diagnostics toggle<CR>", desc = "Erreurs du projet (Trouble)" },
     { "<Leader>xx", "<Cmd>Trouble diagnostics toggle<CR>", desc = "Diagnostics (projet)" },
     { "<Leader>xX", "<Cmd>Trouble diagnostics toggle filter.buf=0<CR>", desc = "Diagnostics (buffer)" },
     { "<Leader>xs", "<Cmd>Trouble symbols toggle<CR>", desc = "Symboles du fichier" },
