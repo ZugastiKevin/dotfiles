@@ -21,6 +21,9 @@ return {
       sourcekit = {
         filetypes = { "swift" },
       },
+      typos_lsp = {
+        init_options = { diagnosticSeverity = "Hint" },
+      },
     },
     handlers = { stylua = false },
     autocmds = {

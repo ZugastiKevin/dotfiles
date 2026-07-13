@@ -120,6 +120,9 @@ Antiseche integree : Espace ? (contextuelle au fichier) · Espace m (deplacement
 | Base de donnees (DBUI) | Espace D |
 | Requetes HTTP (.http) | Espace H -> menu · Hs envoyer · Ha toutes · Hr rejouer |
 | Generer la doc (Doxygen/Javadoc) | Espace l n |
+| Voir l'assembleur genere (godbolt) | :CECompile (selection ou fichier) |
+| Fautes de frappe dans le code | soulignees discretement (typos-lsp), quick-fix Cmd+. |
+| Completion SQL dans DBUI | automatique (tables/colonnes) |
 
 ## Confort (QoL)
 | Fonction | Touche / comportement |

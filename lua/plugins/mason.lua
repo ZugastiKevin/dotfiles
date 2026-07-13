@@ -23,6 +23,7 @@ return {
         "csharpier",
         "wgsl-analyzer",
         "slang",
+        "typos-lsp",
       },
     },
   },
