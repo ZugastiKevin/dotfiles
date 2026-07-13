@@ -49,7 +49,7 @@ if vim.g.neovide then
   vim.g.neovide_cursor_smooth_blink = true
   vim.g.neovide_position_animation_length = 0.15
   vim.g.neovide_floating_corner_radius = 0.35
-  vim.g.neovide_opacity = 0.92
+  vim.g.neovide_opacity = 1.0
   vim.g.neovide_normal_opacity = 0.92
   vim.g.neovide_light_angle_degrees = 40
   vim.g.neovide_light_radius = 6

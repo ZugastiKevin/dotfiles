@@ -64,6 +64,7 @@ return {
         autoread = true,
         swapfile = false,
         undofile = true,
+        fillchars = { foldopen = "▾", foldclose = "▸", fold = " ", foldsep = " ", diff = "╱", eob = " " },
       },
       g = {
         loaded_node_provider = 0,
@@ -153,6 +154,8 @@ return {
         },
         ["<C-S-Down>"] = { "<Cmd>m .+1<CR>==", desc = "Move line down" },
         ["<C-S-Up>"] = { "<Cmd>m .-2<CR>==", desc = "Move line up" },
+
+        ["<Leader>fu"] = { function() require("snacks").picker.undo() end, desc = "Historique d'annulation" },
 
         ["<Leader>r"] = { desc = "Run / Debug" },
         ["<Leader>rr"] = { run_or_debug "run", desc = "Run" },
