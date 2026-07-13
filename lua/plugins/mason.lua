@@ -21,6 +21,8 @@ return {
         "debugpy",
         "roslyn",
         "csharpier",
+        "wgsl-analyzer",
+        "slang",
       },
     },
   },
