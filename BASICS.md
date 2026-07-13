@@ -20,6 +20,7 @@ truc bizarre, appuie i pour ecrire, jk pour ressortir.
 | Tu veux... | Touche |
 |---|---|
 | Mot precedent / suivant | Ctrl+Gauche / Ctrl+Droite |
+| Bloc / paragraphe precedent / suivant | Alt+Haut / Alt+Bas |
 | Debut / fin de ligne | Cmd+Gauche / Cmd+Droite |
 | Debut / fin du fichier | Cmd+Haut / Cmd+Bas |
 | SELECTIONNER en bougeant | ajoute Shift (Shift+fleche, Shift+Ctrl+fleche, Shift+Cmd+fleche) |

@@ -29,7 +29,8 @@ Antiseche integree : Espace ? (contextuelle au fichier) · Espace m (deplacement
 ## Deplacement aux fleches (Mac/IDE)
 | Action | Touche |
 |---|---|
-| Mot precedent / suivant | Ctrl+Gauche / Ctrl+Droite |
+| Mot precedent / suivant | Ctrl+Gauche / Ctrl+Droite (ou Alt) |
+| Bloc / paragraphe precedent / suivant | Alt+Haut / Alt+Bas |
 | Debut / fin de ligne | Cmd+Gauche / Cmd+Droite |
 | Debut / fin du fichier | Cmd+Haut / Cmd+Bas |
 | Selectionner | ajoute Shift a n'importe quelle fleche/combo |

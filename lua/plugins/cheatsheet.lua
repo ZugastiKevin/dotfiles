@@ -103,6 +103,7 @@ local movement = {
     {
       { "<C-←> / <C-→>", "Mot precedent / suivant" },
       { "<A-←> / <A-→>", "Mot precedent / suivant" },
+      { "<A-↑> / <A-↓>", "Bloc / paragraphe prec. / suiv." },
       { "<D-←> / <D-→>", "Debut / fin de ligne" },
       { "<D-↑> / <D-↓>", "Debut / fin du fichier" },
     },
