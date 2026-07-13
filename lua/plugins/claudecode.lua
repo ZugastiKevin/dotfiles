@@ -10,7 +10,6 @@ return {
     },
   },
   keys = {
-    { "<Leader>a", nil, desc = "IA (Claude Code)" },
     { "<Leader>ac", "<Cmd>ClaudeCode<CR>", desc = "Toggle Claude Code" },
     { "<Leader>af", "<Cmd>ClaudeCodeFocus<CR>", desc = "Focus le panneau" },
     { "<Leader>ar", "<Cmd>ClaudeCode --resume<CR>", desc = "Reprendre une session" },

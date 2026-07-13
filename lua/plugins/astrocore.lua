@@ -20,6 +20,13 @@ local function run_or_debug(kind)
       vim.cmd("TermExec direction=horizontal cmd='python3 " .. vim.fn.shellescape(vim.fn.expand "%") .. "'")
     elseif ft == "lua" then
       vim.cmd "luafile %"
+    elseif ft == "swift" then
+      local root = vim.fs.root(0, "Package.swift")
+      if root then
+        vim.cmd("TermExec direction=horizontal dir=" .. vim.fn.shellescape(root) .. " cmd='swift run'")
+      else
+        vim.cmd("TermExec direction=horizontal cmd='swift " .. vim.fn.shellescape(vim.fn.expand "%:p") .. "'")
+      end
     else
       vim.notify("Run non configure pour '" .. ft .. "'", vim.log.levels.INFO)
     end
@@ -72,6 +79,7 @@ return {
         loaded_perl_provider = 0,
         loaded_python3_provider = 0,
         loaded_ruby_provider = 0,
+        no_rust_maps = 1,
       },
     },
     mappings = {
@@ -124,6 +132,20 @@ return {
         ["<Leader>uW"] = false,
         ["<Leader>uG"] = { "<Cmd>GirlyTheme<CR>", desc = "Choisir un theme girly" },
 
+        ["<Leader>a"] = { desc = "IA (Claude Code)" },
+        ["<Leader>a<CR>"] = false,
+        ["<Leader>ac"] = false,
+        ["<Leader>af"] = false,
+        ["<Leader>at"] = false,
+        ["<Leader>aF"] = false,
+        ["<Leader>H"] = { desc = "Requetes HTTP" },
+        ["<leader>M"] = false,
+        ["<leader>Ma"] = false,
+        ["<leader>Mc"] = false,
+        ["<leader>Mi"] = false,
+        ["<leader>Mr"] = false,
+        ["<leader>Mt"] = false,
+
         ["<D-[>"] = { "<C-o>", desc = "Navigate back" },
         ["<D-]>"] = { "<C-i>", desc = "Navigate forward" },
 
@@ -158,7 +180,7 @@ return {
 
         ["<Leader>fu"] = { function() require("snacks").picker.undo() end, desc = "Historique d'annulation" },
 
-        ["<Leader>r"] = { desc = "Run / Debug" },
+        ["<Leader>r"] = { desc = "Run / Refactor" },
         ["<Leader>rr"] = { run_or_debug "run", desc = "Run" },
         ["<Leader>rd"] = { run_or_debug "debug", desc = "Debug" },
         ["<Leader>rb"] = { function() dap().toggle_breakpoint() end, desc = "Point d'arret" },
@@ -187,7 +209,14 @@ return {
         ["<C-S-Down>"] = { "<Esc><Cmd>m .+1<CR>==gi", desc = "Move line down" },
         ["<C-S-Up>"] = { "<Esc><Cmd>m .-2<CR>==gi", desc = "Move line up" },
       },
+      x = {
+        ["S"] = false,
+      },
       v = {
+        ["<Leader>r"] = { desc = "Refactoring" },
+        ["<Leader>c"] = { desc = "Screenshot code" },
+        ["<Leader>a"] = { desc = "IA (Claude Code)" },
+        ["<Leader>g"] = { desc = "Git" },
         ["<C-Left>"] = { "b", desc = "Mot precedent" },
         ["<C-Right>"] = { "w", desc = "Mot suivant" },
         ["<D-Left>"] = { "^", desc = "Debut de ligne" },

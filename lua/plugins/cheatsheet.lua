@@ -7,9 +7,12 @@ local core = {
   { "<Leader>xx", "Panneau d'erreurs (Trouble)" },
   { "<Leader>rr / <Leader>rd", "Run / Debug" },
   { "<Leader>rb", "Point d'arret" },
+  { "<Leader>or", "Lancer une tache (Overseer)" },
   { "<D-1>", "Explorateur (neo-tree)" },
   { "<D-9>", "Lazygit" },
   { "<D-t>", "Terminal flottant" },
+  { "<D-i>", "Claude Code (ouvrir/fermer)" },
+  { "<Leader>fu", "Historique d'annulation" },
   { "<Leader>uB", "Toggle git blame" },
   { "]f / [f", "Fonction suivante / precedente" },
   { "]] / [[", "Classe / impl suivant / precedent" },
@@ -17,7 +20,12 @@ local core = {
   { "<Leader>ux", "Toggle bandeau de scope" },
   { "<C-g>", "Multi-curseur sur le mot" },
   { "s", "Flash : sauter n'importe ou" },
+  { "g?v / g?p", "Print de debug (variable / plain)" },
+  { "g?d / g?t", "Supprimer / commenter les prints" },
+  { "<Leader>re / rv / ri", "Refactor : extraire fct / var / inline (visuel)" },
+  { "<Leader>cs", "Screenshot du code (visuel)" },
   { "<Leader>m", "Cheatsheet des DEPLACEMENTS" },
+  { "<Leader>? / <D-?>", "Cette antiseche" },
 }
 
 local per_ft = {
@@ -45,9 +53,39 @@ local per_ft = {
     { "<Leader>rd", "Debug (methode de test)" },
     { "<Leader>lv", "Choisir le venv" },
   },
-  c = { { "<C-r>", "Run (CMake ou fichier)" }, { "<C-d>", "Debugger (codelldb)" }, { "<D-.>", "Code actions" }, { "<C-S-r>", "Renommer" } },
+  c = {
+    { "<C-r>", "Run (CMake ou fichier)" },
+    { "<C-d>", "Debugger (codelldb)" },
+    { "<Leader>lh", "Basculer header/source" },
+    { "<Leader>lb / lr / lC", "CMake: build / run / debug" },
+    { "<D-.>", "Code actions" },
+    { "<C-S-r>", "Renommer" },
+  },
+  java = {
+    { "<C-r>", "Run / Debug (classe main)" },
+    { "<C-d>", "Relancer le dernier debug" },
+    { "<Leader>li", "Organiser les imports" },
+    { "<Leader>lv / lc", "Extraire variable / constante" },
+    { "<Leader>lm", "Extraire methode (visuel)" },
+    { "<Leader>lt / lT", "Tester methode / classe" },
+    { "<Leader>lb", "Build (Overseer)" },
+  },
+  http = {
+    { "<CR>", "Envoyer la requete" },
+    { "<Leader>Hs / Ha", "Envoyer (une / toutes)" },
+    { "<Leader>Hr", "Rejouer la derniere" },
+    { "<Leader>Hi", "Inspecter la requete" },
+    { "<Leader>He", "Choisir l'environnement" },
+    { "<Leader>Hn / Hp", "Requete suivante / precedente" },
+    { "<Leader>Hc / HC", "Copier / coller en cURL" },
+    { "<Leader>Ht", "Basculer headers/body" },
+  },
   lua = { { "<Leader>rr", "Executer le fichier (luafile)" }, { "<D-j>", "Doc au survol" } },
 }
+
+per_ft.cpp = per_ft.c
+per_ft.objc = per_ft.c
+per_ft.objcpp = per_ft.c
 
 local function cargo_extra()
   return {
@@ -90,7 +128,7 @@ local movement = {
     "Naviguer le code (LSP)",
     {
       { "<D-b>", "Aller a la definition" },
-      { "gD", "Aller a la declaration" },
+      { "gD", "Aller a la declaration (selon serveur)" },
       { "<D-S-i>", "Aller a l'implementation" },
       { "<C-S-b>", "Aller au type" },
       { "<D-u>", "Usages / references" },

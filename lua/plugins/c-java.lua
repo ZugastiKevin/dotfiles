@@ -70,12 +70,22 @@ return {
     opts = {
       mappings = {
         n = {
-          ["<Leader>o"] = { desc = "Taches (Overseer)" },
           ["<Leader>oo"] = { "<Cmd>OverseerToggle<CR>", desc = "Overseer: panneau" },
           ["<Leader>or"] = { "<Cmd>OverseerRun<CR>", desc = "Overseer: lancer une tache" },
-          ["<Leader>ob"] = { "<Cmd>OverseerBuild<CR>", desc = "Overseer: creer une tache" },
-          ["<Leader>oa"] = { "<Cmd>OverseerQuickAction<CR>", desc = "Overseer: action rapide" },
-          ["<Leader>ol"] = { "<Cmd>OverseerRestartLast<CR>", desc = "Overseer: relancer la derniere" },
+          ["<Leader>ob"] = { "<Cmd>OverseerShell<CR>", desc = "Overseer: tache shell" },
+          ["<Leader>oa"] = { "<Cmd>OverseerTaskAction<CR>", desc = "Overseer: action sur une tache" },
+          ["<Leader>ol"] = {
+            function()
+              local overseer = require "overseer"
+              local tasks = overseer.list_tasks { recent_first = true }
+              if vim.tbl_isempty(tasks) then
+                vim.notify("Aucune tache Overseer", vim.log.levels.WARN)
+              else
+                overseer.run_action(tasks[1], "restart")
+              end
+            end,
+            desc = "Overseer: relancer la derniere",
+          },
           ["<Leader>ln"] = { function() require("neogen").generate() end, desc = "Generer la doc (Doxygen/Javadoc)" },
         },
       },
@@ -90,7 +100,7 @@ return {
               buf_map(buf, "<Leader>lh", "<Cmd>ClangdSwitchSourceHeader<CR>", "Basculer header/source")
               buf_map(buf, "<Leader>lb", "<Cmd>CMakeBuild<CR>", "CMake: build")
               buf_map(buf, "<Leader>lr", "<Cmd>CMakeRun<CR>", "CMake: run")
-              buf_map(buf, "<Leader>lD", "<Cmd>CMakeDebug<CR>", "CMake: debug")
+              buf_map(buf, "<Leader>lC", "<Cmd>CMakeDebug<CR>", "CMake: debug")
               buf_map(buf, "<Leader>lg", "<Cmd>CMakeGenerate<CR>", "CMake: generate")
               buf_map(buf, "<Leader>lt", "<Cmd>CMakeSelectBuildTarget<CR>", "CMake: choisir la cible")
               buf_map(buf, "<Leader>lT", "<Cmd>CMakeSelectBuildType<CR>", "CMake: type de build")
@@ -142,5 +152,11 @@ return {
         },
       },
     },
+  },
+  {
+    "AstroNvim/astrocore",
+    opts = function(_, opts)
+      opts.mappings.n["<Leader>o"] = { desc = "Taches (Overseer)" }
+    end,
   },
 }

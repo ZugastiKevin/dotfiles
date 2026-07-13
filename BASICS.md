@@ -9,6 +9,7 @@ Touches : Ctrl, Cmd, Alt, Shift. Ex : "Cmd+Shift+O" = les 3 ensemble.
 | Arreter d'ecrire (mode normal) | jk (ou Echap) |
 | Sauvegarder | Cmd+S |
 | Annuler / refaire | Cmd+Z / Cmd+Shift+Z |
+| Voir mes raccourcis (antiseche) | Espace ? |
 | Fermer l'onglet | :q puis Entree |
 | Quitter Neovim | :qa puis Entree |
 
@@ -78,6 +79,9 @@ truc bizarre, appuie i pour ecrire, jk pour ressortir.
 - **Saut eclair** : tape `s` + 2 lettres -> le curseur teleporte sur le mot.
 - **Replier le code** : `za` (sous le curseur) · `zR` tout ouvrir · `zM` tout fermer · `zK` apercu. (fleches de repli dans la marge gauche)
 - **Tabout** : `Tab` pour sortir d'une parenthese/accolade/guillemet quand tu tapes.
+- **Claude Code** : Cmd+I ouvre/ferme le panneau IA.
+- **Print de debug** : g?v (variable sous le curseur) / g?p (texte), g?d enleve tout.
+- **Annulation visuelle** : Espace f u -> arbre de l'historique.
 - Auto : cmdline flottante (Noice), brackets colores, erreurs en bout de ligne.
 
 ## 5. Bonus Vim (mode normal)

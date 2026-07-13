@@ -96,6 +96,7 @@ vim.api.nvim_create_autocmd("User", {
   callback = function()
     pcall(function() require("anim_control").register() end)
     pcall(function() require("editor_toggles").register() end)
+    pcall(function() require("keyfreq").register() end)
   end,
 })
 
