@@ -34,7 +34,10 @@ if vim.g.neovide then
   vim.g.neovide_cursor_animate_in_insert_mode = true
   vim.g.neovide_cursor_animate_command_line = true
   math.randomseed((vim.uv or vim.loop).hrtime())
-  vim.g.neovide_cursor_vfx_mode = "railgun"
+  vim.g.neovide_cursor_vfx_mode = { "railgun", "pixiedust" }
+  vim.g.neovide_progress_bar_enabled = true
+  vim.g.neovide_progress_bar_height = 8
+  vim.g.neovide_progress_bar_hide_delay = 1.2
   vim.g.neovide_cursor_vfx_particle_lifetime = 1.4
   vim.g.neovide_cursor_vfx_particle_density = 12.0
   vim.g.neovide_cursor_vfx_particle_speed = 12.0
@@ -97,6 +100,8 @@ vim.api.nvim_create_autocmd("User", {
     pcall(function() require("anim_control").register() end)
     pcall(function() require("editor_toggles").register() end)
     pcall(function() require("keyfreq").register() end)
+    pcall(function() require("sparkle").register() end)
+    pcall(function() require("girly_gradient").enable() end)
   end,
 })
 

@@ -9,6 +9,7 @@ local state = {
   indent = true,
   beacon = true,
   fidget = true,
+  wave = true,
 }
 
 local function apply(key)
@@ -64,6 +65,8 @@ local function apply(key)
     pcall(function() require("beacon").config.enabled = on end)
   elseif key == "fidget" then
     pcall(function() require("fidget.progress").suppress(not on) end)
+  elseif key == "wave" then
+    pcall(function() require("girly_gradient").set(on) end)
   end
 end
 
@@ -76,10 +79,25 @@ local items = {
   { key = "indent", map = "n", label = "Guides d'indentation" },
   { key = "beacon", map = "b", label = "Beacon (flash de saut)" },
   { key = "fidget", map = "f", label = "Fidget (progression LSP)" },
+  { key = "wave", map = "d", label = "Vague de la statusline" },
 }
 
-local cursor_vfx_modes = { "railgun", "torpedo", "pixiedust", "sonicboom", "ripple", "wireframe", "" }
+local cursor_vfx_modes = {
+  { "railgun", "pixiedust" },
+  "railgun",
+  "torpedo",
+  "pixiedust",
+  { "sonicboom", "ripple" },
+  "sonicboom",
+  "ripple",
+  "wireframe",
+  "",
+}
 local cursor_vfx_idx = 1
+local function vfx_label(mode)
+  if type(mode) == "table" then return table.concat(mode, " + ") end
+  return mode == "" and "off (trail seul)" or mode
+end
 local function cycle_cursor_vfx()
   if not vim.g.neovide then
     vim.notify("Cursor VFX : dispo seulement sous Neovide", vim.log.levels.WARN)
@@ -90,7 +108,7 @@ local function cycle_cursor_vfx()
   state.cursor = mode ~= ""
   vim.g.neovide_cursor_vfx_mode = mode
   if mode ~= "" then vim.g._anim_vfx = mode end
-  vim.notify("Cursor VFX : " .. (mode == "" and "off (trail seul)" or mode), vim.log.levels.INFO, { title = "Animations" })
+  vim.notify("Cursor VFX : " .. vfx_label(mode), vim.log.levels.INFO, { title = "Animations" })
 end
 
 local scroll_easings = { "linear", "quadratic", "cubic", "quartic", "quintic", "circular", "sine" }

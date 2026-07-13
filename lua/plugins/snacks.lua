@@ -15,15 +15,6 @@ return {
     dashboard = {
       enabled = true,
       preset = {
-        header = table.concat({
-          [[                                 ]],
-          [[            /\_/\                ]],
-          [[           ( ^.^ )               ]],
-          [[            > ^ <                ]],
-          [[                                 ]],
-          [[    a n n a   ♥   n e o v i m    ]],
-          [[                                 ]],
-        }, "\n"),
         keys = {
           { key = "f", desc = "Trouver un fichier", action = ":lua Snacks.dashboard.pick('files')" },
           { key = "r", desc = "Fichiers recents", action = ":lua Snacks.dashboard.pick('oldfiles')" },
@@ -35,7 +26,9 @@ return {
         },
       },
       sections = {
-        { section = "header", hl = "GirlyDashHeader" },
+        function()
+          return { header = require("girly_dash").frame(), align = "center", padding = 1 }
+        end,
         { section = "keys", gap = 0, padding = 2 },
         { section = "recent_files", title = "Recents", indent = 2, padding = 1, limit = 6 },
         { section = "projects", title = "Projets", indent = 2, padding = 1, limit = 6 },
@@ -52,7 +45,23 @@ return {
             {
               event = { "VimEnter", "ColorScheme" },
               desc = "Teinte rose du header du dashboard",
-              callback = function() vim.api.nvim_set_hl(0, "GirlyDashHeader", { fg = "#ff2d95", bold = true }) end,
+              callback = function()
+                vim.api.nvim_set_hl(0, "SnacksDashboardHeader", { fg = "#ff2d95", bold = true })
+              end,
+            },
+          },
+          girly_dashboard_blink = {
+            {
+              event = "User",
+              pattern = "SnacksDashboardOpened",
+              desc = "Clignement du chat du dashboard",
+              callback = function() pcall(function() require("girly_dash").on_open() end) end,
+            },
+            {
+              event = "User",
+              pattern = "SnacksDashboardClosed",
+              desc = "Arret du clignement",
+              callback = function() pcall(function() require("girly_dash").on_close() end) end,
             },
           },
         },
