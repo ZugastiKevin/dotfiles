@@ -16,14 +16,13 @@ return {
       enabled = true,
       preset = {
         header = table.concat({
-          [[                                    ]],
-          [[            ／l、                   ]],
-          [[          （ﾟ､ ｡ ７                 ]],
-          [[            l  ~ヽ                  ]],
-          [[            じしf_,)ノ              ]],
-          [[                                    ]],
-          [[      a n n a   ♥   n e o v i m     ]],
-          [[                                    ]],
+          [[                                 ]],
+          [[            /\_/\                ]],
+          [[           ( ^.^ )               ]],
+          [[            > ^ <                ]],
+          [[                                 ]],
+          [[    a n n a   ♥   n e o v i m    ]],
+          [[                                 ]],
         }, "\n"),
         keys = {
           { key = "f", desc = "Trouver un fichier", action = ":lua Snacks.dashboard.pick('files')" },
