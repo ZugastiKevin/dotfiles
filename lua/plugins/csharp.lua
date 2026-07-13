@@ -116,7 +116,7 @@ return {
   {
     "mfussenegger/nvim-dap",
     optional = true,
-    config = configure_dap,
+    opts = function() configure_dap() end,
   },
   {
     "AstroNvim/astrocore",
@@ -179,6 +179,7 @@ return {
                 vim.notify("roslyn relance — indexation ~1-2 min (regarde fidget)", vim.log.levels.INFO, { title = "Unity" })
               end, "C#: relancer roslyn (re-indexer la solution)")
               map("<Leader>lo", function() vim.lsp.buf.code_action { context = { only = { "source.organizeImports" } }, apply = true } end, "C#: organiser les usings")
+              map("<Leader>rr", function() require("dap").continue() end, "C#: lancer / debug")
             end,
           },
         },

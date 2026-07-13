@@ -23,5 +23,7 @@ if not pcall(require, "lazy") then
   vim.cmd.quit()
 end
 
+vim.env.PATH = vim.fn.stdpath "data" .. "/mason/bin:" .. vim.env.PATH
+
 require "lazy_setup"
 require "polish"

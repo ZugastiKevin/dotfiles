@@ -119,6 +119,7 @@ return {
         ["<D-g>"] = { function() require("illuminate").goto_next_reference(true) end, desc = "Occurrence suivante" },
         ["<D-S-g>"] = { function() require("illuminate").goto_prev_reference(true) end, desc = "Occurrence precedente" },
         ["<Leader>uT"] = { "<Cmd>Twilight<CR>", desc = "Twilight (focus bloc courant)" },
+        ["<Leader>uW"] = false,
         ["<Leader>uG"] = { "<Cmd>GirlyTheme<CR>", desc = "Choisir un theme girly" },
 
         ["<D-[>"] = { "<C-o>", desc = "Navigate back" },
@@ -164,8 +165,6 @@ return {
         ["<C-S-q>"] = { function() dap().terminate() end, desc = "Debug: stop" },
       },
       i = {
-        ["jk"] = { "<Esc>", desc = "Exit insert mode" },
-        ["jj"] = { "<Esc>", desc = "Exit insert mode" },
         ["<D-t>"] = { "<Esc><Cmd>1ToggleTerm direction=float<CR>", desc = "Terminal flottant" },
         ["<C-t>"] = { "<Esc><Cmd>1ToggleTerm direction=float<CR>", desc = "Terminal flottant" },
         ["<D-S-t>"] = { "<Esc><Cmd>2ToggleTerm direction=horizontal size=14<CR>", desc = "Terminal en bas" },

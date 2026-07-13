@@ -17,8 +17,11 @@ for _, p in ipairs(extra_path) do
   end
 end
 
+vim.lsp.log.set_level(vim.log.levels.OFF)
+
 if vim.g.neovide then
   vim.o.guifont = "JetBrainsMono Nerd Font:h14"
+  vim.g.neovide_confirm_quit = true
   vim.g.neovide_padding_top = 10
   vim.g.neovide_padding_bottom = 10
   vim.g.neovide_padding_left = 14
@@ -39,7 +42,7 @@ if vim.g.neovide then
   vim.g.neovide_cursor_vfx_opacity = 220.0
   vim.g.neovide_scroll_animation_length = 0.2
   vim.g.neovide_scroll_animation_far_lines = 1
-  vim.g.neovide_refresh_rate = 120
+  vim.g.neovide_refresh_rate = 60
   vim.g.neovide_window_blurred = true
   vim.g.neovide_input_macos_option_key_is_meta = "both"
 
@@ -48,7 +51,6 @@ if vim.g.neovide then
   vim.g.neovide_floating_corner_radius = 0.35
   vim.g.neovide_opacity = 0.92
   vim.g.neovide_normal_opacity = 0.92
-  vim.g.neovide_unsaved_buffer_opacity = 0.78
   vim.g.neovide_light_angle_degrees = 40
   vim.g.neovide_light_radius = 6
   vim.g.neovide_hide_mouse_when_typing = true
@@ -65,23 +67,32 @@ if vim.g.neovide then
   rand_cursor()
   local ct = (vim.uv or vim.loop).new_timer()
   ct:start(5000, 5000, vim.schedule_wrap(rand_cursor))
+
+  vim.g.neovide_scale_factor = 1.0
+  local function nv_scale(delta)
+    vim.g.neovide_scale_factor = math.max(0.5, math.min(3.0, vim.g.neovide_scale_factor * delta))
+  end
+  vim.keymap.set({ "n", "i", "v", "t" }, "<D-=>", function() nv_scale(1.1) end, { desc = "Neovide zoom +" })
+  vim.keymap.set({ "n", "i", "v", "t" }, "<D-->", function() nv_scale(1 / 1.1) end, { desc = "Neovide zoom -" })
+  vim.keymap.set({ "n", "i", "v", "t" }, "<D-0>", function() vim.g.neovide_scale_factor = 1.0 end, { desc = "Neovide zoom reset" })
 end
+
+local aug = vim.api.nvim_create_augroup("anna_polish", { clear = true })
 
 vim.api.nvim_create_autocmd("VimEnter", {
   desc = "Open Neo-tree on startup",
+  group = aug,
   once = true,
   callback = function()
     vim.schedule(function() pcall(vim.cmd, "Neotree show") end)
   end,
 })
 
-vim.ui.input = require("snacks").input.input
-vim.ui.select = require("snacks").picker.select
-
 pcall(function() require("girly").setup() end)
 
 vim.api.nvim_create_autocmd("User", {
   pattern = "VeryLazy",
+  group = aug,
   once = true,
   callback = function()
     pcall(function() require("anim_control").register() end)
@@ -98,10 +109,12 @@ end
 
 vim.api.nvim_create_autocmd("FileChangedShell", {
   desc = "Recharger sans demander quand le fichier change en dehors",
+  group = aug,
   callback = function() vim.v.fcs_choice = "reload" end,
 })
-vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter", "CursorHold", "CursorHoldI" }, {
+vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "CursorHoldI" }, {
   desc = "Detecter les changements disque",
+  group = aug,
   callback = function()
     if vim.fn.mode() ~= "c" and vim.fn.getcmdwintype() == "" then pcall(vim.cmd.checktime) end
   end,
@@ -109,6 +122,7 @@ vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter", "CursorHold", "CursorHo
 
 vim.api.nvim_create_autocmd({ "TermOpen", "BufWinEnter", "WinEnter" }, {
   desc = "Terminal: passer en mode insertion automatiquement",
+  group = aug,
   callback = function()
     if vim.bo.buftype == "terminal" then vim.cmd "startinsert" end
   end,
@@ -116,6 +130,7 @@ vim.api.nvim_create_autocmd({ "TermOpen", "BufWinEnter", "WinEnter" }, {
 
 vim.api.nvim_create_autocmd("CursorHold", {
   desc = "Auto popup: diagnostics or documentation under cursor",
+  group = aug,
   callback = function()
     if vim.g.auto_doc == false or float_open() or vim.fn.mode() ~= "n" then return end
     local lnum = vim.api.nvim_win_get_cursor(0)[1] - 1

@@ -64,17 +64,19 @@ Touches : Ctrl, Cmd, Shift. Aucune touche F (elles demandent Fn sur Mac) -> tout
 | Probleme suivant / precedent | ]d / [d |
 | Detail du probleme | Ctrl+Shift+D |
 
-## Debug (Rust)
+## Run / Debug
 | Action | Touche |
 |---|---|
-| Run | Ctrl+R |
-| Debug (lancer) | Ctrl+D |
+| Run | Espace r r |
+| Debug (lancer) | Espace r d |
 | Continuer / resume | Ctrl+Shift+C |
-| Point d'arret | Ctrl+B |
+| Point d'arret | Espace r b |
 | Step over | Ctrl+Shift+O |
 | Step into | Ctrl+Shift+N |
 | Step out | Ctrl+Shift+U |
 | Stop | Ctrl+Shift+Q |
+| Run / Debug (C, C++, Obj-C) | Ctrl+R / Ctrl+D |
+| Java : run-debug main / relancer dernier debug | Ctrl+R / Ctrl+D |
 (Build : utilise l'alias terminal `cb`, ou le terminal Cmd+T.)
 
 ## Confort (QoL)
@@ -82,11 +84,11 @@ Touches : Ctrl, Cmd, Shift. Aucune touche F (elles demandent Fn sur Mac) -> tout
 |---|---|
 | Auto-save | automatique (plus besoin de Cmd+S) |
 | Session | rouvre le projet la ou tu t'es arretee (auto) |
-| Harpoon: epingler / menu / sauter | Ctrl+Shift+A / Ctrl+E / Ctrl+1..4 |
 | Occurrences du symbole | s'allument seules ; suivant/precedent Cmd+G / Cmd+Shift+G |
 | Remplacer dans tout le projet | Cmd+Shift+R |
-| Presse-papier (apres avoir colle) | Ctrl+P (plus ancien) / Ctrl+N (plus recent) |
+| Presse-papier (apres avoir colle) | [y (plus ancien) / ]y (plus recent) · Espace f y liste |
 | Saut eclair (Flash) | tape `s` + 2 lettres -> teleporte |
+| Zoom (Neovide) | Cmd+= / Cmd+- / Cmd+0 reset |
 | Replier / deplier | za · zR tout ouvrir · zM tout fermer · zK apercu |
 | Sortir d'une (), {}, "" en tapant | Tab (Tabout) |
 | Lazygit (commit/push/diff/branches) | Cmd+9 |

@@ -4,14 +4,14 @@ local core = {
   { "<Leader>fp", "Changer de projet (liste complete)" },
   { "<D-S-f>", "Rechercher dans le projet" },
   { "<D-S-r>", "Remplacer dans le projet" },
-  { "<C-e>", "Panneau d'erreurs (Trouble)" },
-  { "<C-r> / <C-d>", "Run / Debug" },
-  { "<C-b>", "Point d'arret" },
+  { "<Leader>xx", "Panneau d'erreurs (Trouble)" },
+  { "<Leader>rr / <Leader>rd", "Run / Debug" },
+  { "<Leader>rb", "Point d'arret" },
   { "<D-1>", "Explorateur (neo-tree)" },
   { "<D-9>", "Lazygit" },
   { "<D-t>", "Terminal flottant" },
   { "<Leader>uB", "Toggle git blame" },
-  { "<A-Bas> / <A-Haut>", "Fonction suivante / precedente" },
+  { "]f / [f", "Fonction suivante / precedente" },
   { "]] / [[", "Classe / impl suivant / precedent" },
   { "gS", "Split / join arguments" },
   { "<Leader>ux", "Toggle bandeau de scope" },
@@ -33,7 +33,7 @@ local per_ft = {
     { "<Leader>lk / lj", "Monter / descendre l'item" },
   },
   cs = {
-    { "<C-d>", "Debug / attach Unity" },
+    { "<Leader>lR", "Debug / attach Unity" },
     { "<D-.>", "Code actions" },
     { "<C-S-r>", "Renommer" },
     { "<D-j>", "Doc au survol" },
@@ -41,12 +41,12 @@ local per_ft = {
     { "<D-b>", "Aller a la definition" },
   },
   python = {
-    { "<C-r>", "Lancer le fichier" },
-    { "<C-d>", "Debug (methode de test)" },
+    { "<Leader>rr", "Lancer le fichier" },
+    { "<Leader>rd", "Debug (methode de test)" },
     { "<Leader>lv", "Choisir le venv" },
   },
-  c = { { "<C-d>", "Debugger (codelldb)" }, { "<D-.>", "Code actions" }, { "<C-S-r>", "Renommer" } },
-  lua = { { "<C-r>", "Executer le fichier (luafile)" }, { "<D-j>", "Doc au survol" } },
+  c = { { "<C-r>", "Run (CMake ou fichier)" }, { "<C-d>", "Debugger (codelldb)" }, { "<D-.>", "Code actions" }, { "<C-S-r>", "Renommer" } },
+  lua = { { "<Leader>rr", "Executer le fichier (luafile)" }, { "<D-j>", "Doc au survol" } },
 }
 
 local function cargo_extra()
@@ -72,7 +72,7 @@ local movement = {
   {
     "Dans le code",
     {
-      { "<A-Bas> / <A-Haut>", "Fonction suivante / precedente" },
+      { "]f / [f", "Fonction suivante / precedente" },
       { "]] / [[", "Classe / impl suivant / precedent" },
       { "[x", "Remonter au scope parent" },
     },
@@ -127,7 +127,7 @@ local function render(title, sections)
     lines[#lines + 1] = s
     hl[#lines] = group
   end
-  add("  🌸  " .. title .. "  🌸", "Header")
+  add("  " .. title, "Header")
   for _, sec in ipairs(sections) do
     add("", nil)
     add("  " .. sec[1], "Title")

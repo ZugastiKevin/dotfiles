@@ -14,14 +14,15 @@ return {
         allow_filetypes = {},
         ignore_filetypes = {},
       },
-      disabled = { "roslyn" },
-      timeout_ms = 1000,
+      disabled = { "roslyn", "ruff" },
+      timeout_ms = 3000,
     },
     config = {
       sourcekit = {
         filetypes = { "swift" },
       },
     },
+    handlers = { stylua = false },
     autocmds = {
       lsp_codelens_refresh = {
         cond = "textDocument/codeLens",
@@ -115,6 +116,11 @@ return {
           desc = "Probleme precedent",
         },
         ["<C-S-d>"] = { function() vim.diagnostic.open_float() end, desc = "Detail du probleme" },
+
+        ["<Leader>lr"] = false,
+        ["<Leader>lR"] = false,
+        ["<Leader>lh"] = false,
+        ["<Leader>lf"] = false,
 
         ["<Leader>uH"] = {
           function() require("astrolsp.toggles").buffer_inlay_hints() end,

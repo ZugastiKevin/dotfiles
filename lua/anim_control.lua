@@ -24,9 +24,27 @@ local function apply(key)
       end
     end
   elseif key == "window" then
-    vim.g.minianimate_disable = not on
+    if vim.g.neovide then
+      if on then
+        vim.g.neovide_position_animation_length = vim.g._anim_pos_len or 0.15
+      else
+        vim.g._anim_pos_len = vim.g.neovide_position_animation_length
+        vim.g.neovide_position_animation_length = 0
+      end
+    else
+      vim.g.minianimate_disable = not on
+    end
   elseif key == "scroll" then
-    pcall(function() require("neoscroll.config").opts.duration_multiplier = on and 1.0 or 0.0 end)
+    if vim.g.neovide then
+      if on then
+        vim.g.neovide_scroll_animation_length = vim.g._anim_scroll_len or 0.2
+      else
+        vim.g._anim_scroll_len = vim.g.neovide_scroll_animation_length
+        vim.g.neovide_scroll_animation_length = 0
+      end
+    else
+      pcall(function() require("neoscroll.config").opts.duration_multiplier = on and 1.0 or 0.0 end)
+    end
   elseif key == "glimmer" then
     pcall(function()
       local t = require "tiny-glimmer"

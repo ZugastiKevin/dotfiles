@@ -62,7 +62,7 @@ return {
   {
     "mfussenegger/nvim-dap",
     optional = true,
-    config = configure_dap,
+    opts = function() configure_dap() end,
   },
   {
     "AstroNvim/astrocore",
@@ -108,6 +108,12 @@ return {
                   require("dap").continue()
                 end
               end, "Debug (CMake ou codelldb)")
+              buf_map(buf, "<Leader>rr", function()
+                if has_file "CMakeLists.txt" then vim.cmd "CMakeRun" else compile_run_single() end
+              end, "Run (CMake ou fichier seul)")
+              buf_map(buf, "<Leader>rd", function()
+                if has_file "CMakeLists.txt" then vim.cmd "CMakeDebug" else require("dap").continue() end
+              end, "Debug (CMake ou codelldb)")
             end,
           },
         },
@@ -130,6 +136,7 @@ return {
               buf_map(buf, "<Leader>lb", "<Cmd>OverseerRun<CR>", "Build (Gradle/Maven via Overseer)")
               buf_map(buf, "<C-r>", function() require("dap").continue() end, "Run / Debug (classe main)")
               buf_map(buf, "<C-d>", function() require("dap").run_last() end, "Relancer le dernier debug")
+              buf_map(buf, "<Leader>rr", function() require("dap").continue() end, "Run / Debug (classe main)")
             end,
           },
         },

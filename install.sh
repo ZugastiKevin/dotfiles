@@ -36,7 +36,7 @@ echo "==> Plugins (Lazy sync)"
 nvim --headless "+Lazy! sync" +qa || true
 
 echo "==> Serveurs LSP / debug / formatters (Mason)"
-nvim --headless "+MasonInstall clangd jdtls csharp-ls csharpier basedpyright black isort debugpy java-debug-adapter java-test asm-lsp codelldb" +qa || true
+nvim --headless "+MasonInstall clangd jdtls csharpier basedpyright black isort debugpy java-debug-adapter java-test asm-lsp codelldb netcoredbg roslyn glsl_analyzer lua-language-server stylua clang-format tree-sitter-cli" +qa || true
 
 echo "==> macOS: liberer Ctrl+fleches (sinon = changement de bureau)"
 if [[ "$OSTYPE" == darwin* ]]; then

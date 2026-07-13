@@ -1,5 +1,9 @@
-local JDK25 = "/Library/Java/JavaVirtualMachines/jdk-25.jdk/Contents/Home"
-local JDK21 = "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home"
+local function jdk(version, fallback)
+  local out = vim.fn.systemlist { "/usr/libexec/java_home", "-F", "-v", version }
+  return (vim.v.shell_error == 0 and out[1]) or fallback
+end
+local JDK25 = jdk("25", "/Library/Java/JavaVirtualMachines/jdk-25.jdk/Contents/Home")
+local JDK21 = jdk("21", JDK25)
 
 local function gradle_dir(dir)
   local start = (dir and dir ~= "") and dir or vim.fn.getcwd()

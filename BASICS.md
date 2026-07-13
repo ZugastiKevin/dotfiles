@@ -24,7 +24,7 @@ truc bizarre, appuie i pour ecrire, jk pour ressortir.
 | SELECTIONNER en bougeant | ajoute Shift (Shift+fleche, Shift+Ctrl+fleche, Shift+Cmd+fleche) |
 | Supprimer le mot precedent | Ctrl+Backspace |
 
-(Option/⌥ ne marche pas sur ton Mac -> j'utilise Ctrl pour le saut de mot.)
+(Ctrl+fleche et Alt+fleche marchent tous les deux pour le saut de mot sous Neovide.)
 
 ## 2. Naviguer (comme RustRover)
 | Action | Touche |
@@ -60,10 +60,10 @@ truc bizarre, appuie i pour ecrire, jk pour ressortir.
 ## 4. Run / Debug
 | Action | Touche |
 |---|---|
-| Run | Ctrl+R |
-| Debug (lancer) | Ctrl+D |
+| Run | Espace r r |
+| Debug (lancer) | Espace r d |
 | Continuer / resume | Ctrl+Shift+C |
-| Point d'arret | Ctrl+B |
+| Point d'arret | Espace r b |
 | Step over / into / out | Ctrl+Shift+O / Ctrl+Shift+N / Ctrl+Shift+U |
 | Stop | Ctrl+Shift+Q |
 | Renommer | Ctrl+Shift+R |
@@ -72,10 +72,9 @@ truc bizarre, appuie i pour ecrire, jk pour ressortir.
 ## 4bis. Confort (QoL)
 - **Auto-save** : ca sauve tout seul, oublie Cmd+S.
 - **Session** : rouvre un projet -> il recharge tes fichiers la ou tu etais.
-- **Harpoon** (fichiers epingles) : Ctrl+Shift+A epingle · Ctrl+E menu · Ctrl+1..4 saute.
 - **Occurrences** : pose le curseur sur un mot -> toutes ses utilisations s'allument. Cmd+G / Cmd+Shift+G pour sauter.
 - **Remplacer dans le projet** : Cmd+Shift+R.
-- **Presse-papier** : apres avoir colle, Ctrl+P (plus ancien) / Ctrl+N (plus recent).
+- **Presse-papier** : apres avoir colle, [y (plus ancien) / ]y (plus recent).
 - **Saut eclair** : tape `s` + 2 lettres -> le curseur teleporte sur le mot.
 - **Replier le code** : `za` (sous le curseur) · `zR` tout ouvrir · `zM` tout fermer · `zK` apercu. (fleches de repli dans la marge gauche)
 - **Tabout** : `Tab` pour sortir d'une parenthese/accolade/guillemet quand tu tapes.
