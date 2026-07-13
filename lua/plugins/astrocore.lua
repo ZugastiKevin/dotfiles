@@ -65,6 +65,7 @@ return {
         swapfile = false,
         undofile = true,
         fillchars = { foldopen = "▾", foldclose = "▸", fold = " ", foldsep = " ", diff = "╱", eob = " " },
+        winborder = "rounded",
       },
       g = {
         loaded_node_provider = 0,

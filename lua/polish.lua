@@ -20,7 +20,6 @@ end
 vim.lsp.log.set_level(vim.log.levels.OFF)
 
 if vim.g.neovide then
-  vim.o.guifont = "JetBrainsMono Nerd Font:h14"
   vim.g.neovide_confirm_quit = true
   vim.g.neovide_padding_top = 10
   vim.g.neovide_padding_bottom = 10
