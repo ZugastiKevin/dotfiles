@@ -47,6 +47,19 @@ return {
         ProjectClose = { hard_close, desc = "Vider le projet courant (buffers + LSP)" },
       },
       autocmds = {
+        project_cwd = {
+          {
+            event = { "BufReadPost", "BufNewFile" },
+            desc = "Ancrer le cwd sur la racine du projet, tous langages",
+            callback = function(args)
+              if vim.bo[args.buf].buftype ~= "" then return end
+              local name = vim.api.nvim_buf_get_name(args.buf)
+              if name == "" or name:match "^%w+://" then return end
+              local root = require("project_root").root_of(name)
+              if root and root ~= vim.fn.getcwd() then vim.api.nvim_set_current_dir(root) end
+            end,
+          },
+        },
         project_wipe = {
           {
             event = "DirChanged",
@@ -93,14 +106,14 @@ return {
   {
     "jay-babu/project.nvim",
     opts = {
-      detection_methods = { "pattern", "lsp" },
+      detection_methods = { "lsp", "pattern" },
+      ignore_lsp = { "typos_lsp", "null-ls", "none-ls", "copilot" },
       patterns = {
         "ProjectSettings",
         "Assets",
         "*.slnx",
         "*.sln",
         ".git",
-        "Cargo.toml",
         "package.json",
         "go.mod",
         "Makefile",
@@ -108,7 +121,7 @@ return {
         "*.xcodeproj",
         "build.gradle",
       },
-      scope_chdir = "global",
+      scope_chdir = false,
     },
   },
 }

@@ -1,8 +1,4 @@
-local function nearest_crate(fname)
-  if not fname or fname == "" then return nil end
-  local match = vim.fs.find("Cargo.toml", { upward = true, path = vim.fs.dirname(fname) })[1]
-  return match and vim.fs.dirname(match) or nil
-end
+local function nearest_crate(fname) return require("rust_root").workspace_root(fname) end
 
 ---@type LazySpec
 return {

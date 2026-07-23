@@ -105,9 +105,17 @@ vim.api.nvim_create_autocmd("User", {
   end,
 })
 
+local doc_win = nil
+
+local function close_doc()
+  if doc_win and vim.api.nvim_win_is_valid(doc_win) then pcall(vim.api.nvim_win_close, doc_win, true) end
+  doc_win = nil
+end
+
 local function float_open()
   for _, w in ipairs(vim.api.nvim_list_wins()) do
-    if vim.api.nvim_win_get_config(w).relative ~= "" then return true end
+    local config = vim.api.nvim_win_get_config(w)
+    if config.relative ~= "" and (config.zindex or 50) >= 50 and w ~= doc_win then return true end
   end
   return false
 end
@@ -137,6 +145,7 @@ vim.api.nvim_create_autocmd("CursorHold", {
   desc = "Auto popup: diagnostics or documentation under cursor",
   group = aug,
   callback = function()
+    close_doc()
     if vim.g.auto_doc == false or float_open() or vim.fn.mode() ~= "n" then return end
     local lnum = vim.api.nvim_win_get_cursor(0)[1] - 1
     if #vim.diagnostic.get(0, { lnum = lnum }) > 0 then
@@ -151,7 +160,9 @@ vim.api.nvim_create_autocmd("CursorHold", {
       local lines = vim.lsp.util.convert_input_to_markdown_lines(result.contents)
       lines = vim.tbl_filter(function(l) return l ~= nil and l ~= "" end, lines)
       if #lines == 0 or float_open() then return end
-      vim.lsp.util.open_floating_preview(lines, "markdown", { focusable = false, focus = false, border = "rounded" })
+      local _, win = vim.lsp.util.open_floating_preview(lines, "markdown",
+        { focusable = false, focus = false, border = "rounded" })
+      doc_win = win
     end)
   end,
 })
