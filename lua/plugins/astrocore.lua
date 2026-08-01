@@ -132,12 +132,6 @@ return {
         ["<Leader>uW"] = false,
         ["<Leader>uG"] = { "<Cmd>GirlyTheme<CR>", desc = "Choisir un theme girly" },
 
-        ["<Leader>a"] = { desc = "IA (Claude Code)" },
-        ["<Leader>a<CR>"] = false,
-        ["<Leader>ac"] = false,
-        ["<Leader>af"] = false,
-        ["<Leader>at"] = false,
-        ["<Leader>aF"] = false,
         ["<Leader>H"] = { desc = "Requetes HTTP" },
         ["<leader>M"] = false,
         ["<leader>Ma"] = false,
@@ -146,6 +140,8 @@ return {
         ["<leader>Mr"] = false,
         ["<leader>Mt"] = false,
 
+        ["<D-b>"] = { "<C-o>", desc = "Retour (back)" },
+        ["<D-S-b>"] = { "<C-i>", desc = "Avancer (forward)" },
         ["<D-[>"] = { "<C-o>", desc = "Navigate back" },
         ["<D-]>"] = { "<C-i>", desc = "Navigate forward" },
 
@@ -181,6 +177,7 @@ return {
         ["<C-S-Up>"] = { "<Cmd>m .-2<CR>==", desc = "Move line up" },
 
         ["<Leader>fu"] = { function() require("snacks").picker.undo() end, desc = "Historique d'annulation" },
+        ["<Leader>fi"] = { pick "icons", desc = "Glyphes Nerd Font / emoji" },
 
         ["<Leader>r"] = { desc = "Run / Refactor" },
         ["<Leader>rr"] = { run_or_debug "run", desc = "Run" },
@@ -217,7 +214,6 @@ return {
       v = {
         ["<Leader>r"] = { desc = "Refactoring" },
         ["<Leader>c"] = { desc = "Screenshot code" },
-        ["<Leader>a"] = { desc = "IA (Claude Code)" },
         ["<Leader>g"] = { desc = "Git" },
         ["<C-Left>"] = { "b", desc = "Mot precedent" },
         ["<C-Right>"] = { "w", desc = "Mot suivant" },

@@ -4,7 +4,7 @@ return {
   opts = {
     input = { enabled = true },
     picker = { ui_select = true },
-    image = { enabled = false },
+    image = { enabled = require("image_view").has_graphics() },
     bigfile = { enabled = true },
     quickfile = { enabled = true },
     indent = {

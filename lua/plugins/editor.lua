@@ -2,6 +2,7 @@
 return {
   {
     "mg979/vim-visual-multi",
+    enabled = false,
     event = "User AstroFile",
     init = function()
       vim.g.VM_maps = {

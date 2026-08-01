@@ -46,9 +46,9 @@ return {
           cond = "textDocument/declaration",
         },
 
-        ["<D-b>"] = {
+        ["<D-i>"] = {
           function() vim.lsp.buf.definition() end,
-          desc = "Go to declaration",
+          desc = "Inspecter (aller a la definition)",
           cond = "textDocument/definition",
         },
         ["<D-S-i>"] = {

@@ -10,6 +10,8 @@ local state = {
   beacon = true,
   fidget = true,
   wave = true,
+  vimade = true,
+  drop = false,
 }
 
 local function apply(key)
@@ -67,6 +69,10 @@ local function apply(key)
     pcall(function() require("fidget.progress").suppress(not on) end)
   elseif key == "wave" then
     pcall(function() require("girly_gradient").set(on) end)
+  elseif key == "vimade" then
+    pcall(vim.cmd, on and "VimadeEnable" or "VimadeDisable")
+  elseif key == "drop" then
+    pcall(function() require("drop")[on and "show" or "hide"]() end)
   end
 end
 
@@ -80,6 +86,8 @@ local items = {
   { key = "beacon", map = "b", label = "Beacon (flash de saut)" },
   { key = "fidget", map = "f", label = "Fidget (progression LSP)" },
   { key = "wave", map = "d", label = "Vague de la statusline" },
+  { key = "vimade", map = "v", label = "Fondu des fenetres inactives" },
+  { key = "drop", map = "e", label = "Pluie d'etoiles (drop)" },
 }
 
 local cursor_vfx_modes = {

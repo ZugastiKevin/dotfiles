@@ -11,21 +11,62 @@ local core = {
   { "<D-1>", "Explorateur (neo-tree)" },
   { "<D-9>", "Lazygit" },
   { "<D-t>", "Terminal flottant" },
-  { "<D-i>", "Claude Code (ouvrir/fermer)" },
+  { "<D-i> / <D-b>", "Inspecter (definition) / revenir" },
   { "<Leader>fu", "Historique d'annulation" },
   { "<Leader>uB", "Toggle git blame" },
   { "]f / [f", "Fonction suivante / precedente" },
   { "]] / [[", "Classe / impl suivant / precedent" },
   { "gS", "Split / join arguments" },
   { "<Leader>ux", "Toggle bandeau de scope" },
-  { "<C-g>", "Multi-curseur sur le mot" },
+  { "<Leader>xq / xl", "Quickfix / loclist (editables)" },
   { "s", "Flash : sauter n'importe ou" },
   { "g?v / g?p", "Print de debug (variable / plain)" },
   { "g?d / g?t", "Supprimer / commenter les prints" },
   { "<Leader>re / rv / ri", "Refactor : extraire fct / var / inline (visuel)" },
+  { "<Leader>rc / rC", "Supprimer les commentaires (fichier / projet)" },
+  { "<Leader>rP / rD", "Commentaires : tout sauf la doc / doc seule" },
   { "<Leader>cs", "Screenshot du code (visuel)" },
   { "<Leader>m", "Cheatsheet des DEPLACEMENTS" },
   { "<Leader>? / <D-?>", "Cette antiseche" },
+}
+
+local multicursor = {
+  { "<C-g>", "Curseur sur l'occurrence suivante" },
+  { "<A-g>", "Sauter l'occurrence" },
+  { "<A-q>", "Geler / degeler les curseurs" },
+  { "<C-clic>", "Ajouter / retirer un curseur" },
+  { "<Leader>Mj / Mk", "Curseur ligne dessous / dessus" },
+  { "<Leader>Mn / MN", "Occurrence suivante / precedente" },
+  { "<Leader>Ms / MS", "Sauter suivante / precedente" },
+  { "<Leader>Ml", "Aligner les colonnes" },
+  { "<Leader>Mo", "Un curseur par ligne (operateur)" },
+  { "<Leader>Mm / Mp", "Visuel : regex / decouper" },
+  { "<Leader>Mr", "Restaurer les curseurs" },
+  { "<Leader>Mx", "Supprimer le curseur courant" },
+  { "<Left> / <Right>", "Changer de curseur principal" },
+  { "<Esc>", "Sortir du multi-curseur" },
+}
+
+local look = {
+  { "<Leader>Ua", "Menu des animations" },
+  { "<Leader>Uv", "Fondu des fenetres inactives" },
+  { "<Leader>Ue", "Pluie d'etoiles (drop)" },
+  { "<Leader>UV / UE", "Cycle cursor VFX / easing" },
+  { "<Leader>Ur / Ul", "Pluie de code / game of life" },
+  { "<Leader>uP", "Palette de couleurs (minty)" },
+  { "<Leader>uG", "Choisir un theme girly" },
+  { "<Leader>uM", "Masquer les infos sensibles" },
+}
+
+local tools = {
+  { "<Leader>W", "Hydra : gestion des fenetres" },
+  { "<Leader>fU", "Time machine (timeline d'undo)" },
+  { "<Leader>fK", "Wrapped (stats de la config)" },
+  { "<Leader>fi", "Glyphes Nerd Font / emoji" },
+  { "<Leader>P", "Coller une image du presse-papier" },
+  { "<Leader>uI", "Image : vraie image / donnees" },
+  { "<Leader>uH", "Image : image / brut / hex" },
+  { "gx", "Image : ouvrir dans la visionneuse" },
 }
 
 local per_ft = {
@@ -46,7 +87,7 @@ local per_ft = {
     { "<C-S-r>", "Renommer" },
     { "<D-j>", "Doc au survol" },
     { "<D-u>", "Trouver les usages" },
-    { "<D-b>", "Aller a la definition" },
+    { "<D-i> / <D-b>", "Inspecter / revenir" },
   },
   python = {
     { "<Leader>rr", "Lancer le fichier" },
@@ -128,13 +169,15 @@ local movement = {
   {
     "Naviguer le code (LSP)",
     {
-      { "<D-b>", "Aller a la definition" },
+      { "<D-i>", "Inspecter : aller a la definition" },
+      { "<D-b> / <D-S-b>", "Revenir / ravancer (historique)" },
+      { "<D-[> / <D-]>", "Revenir / ravancer (alias)" },
       { "gD", "Aller a la declaration (selon serveur)" },
       { "<D-S-i>", "Aller a l'implementation" },
       { "<C-S-b>", "Aller au type" },
       { "<D-u>", "Usages / references" },
-      { "<D-[> / <D-]>", "Reculer / avancer (historique)" },
       { "<D-7>", "Structure du fichier (symboles)" },
+      { "<D-S-y>", "Aller a un symbole (projet)" },
     },
   },
   {
@@ -236,7 +279,12 @@ end
 local function open_cheatsheet()
   local ft = vim.bo.filetype
   local fname = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ":t")
-  local sections = { { "Partout", core } }
+  local sections = {
+    { "Partout", core },
+    { "Multi-curseur", multicursor },
+    { "Look & animations", look },
+    { "Outils", tools },
+  }
   if fname == "Cargo.toml" then
     sections[#sections + 1] = { "Ici ( Cargo.toml )", cargo_extra() }
   elseif per_ft[ft] then

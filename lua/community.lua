@@ -30,9 +30,14 @@ return {
   { import = "astrocommunity.scrolling.neoscroll-nvim" },
   { import = "astrocommunity.project.project-nvim" },
   { import = "astrocommunity.color.twilight-nvim" },
-  { import = "astrocommunity.quickfix.nvim-bqf" },
+  { import = "astrocommunity.quickfix.quicker-nvim" },
   { import = "astrocommunity.code-runner.overseer-nvim" },
   { import = "astrocommunity.editing-support.neogen" },
+
+  { import = "astrocommunity.media.drop-nvim" },
+  { import = "astrocommunity.media.cord-nvim" },
+  { import = "astrocommunity.media.img-clip-nvim" },
+  { import = "astrocommunity.keybinding.hydra-nvim" },
 
   { import = "astrocommunity.colorscheme.catppuccin" },
 }

@@ -91,6 +91,7 @@ vim.api.nvim_create_autocmd("VimEnter", {
 })
 
 pcall(function() require("girly").setup() end)
+pcall(function() require("image_view").setup() end)
 
 vim.api.nvim_create_autocmd("User", {
   pattern = "VeryLazy",

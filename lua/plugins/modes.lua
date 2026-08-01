@@ -1,6 +1,7 @@
 ---@type LazySpec
 return {
   "mvllow/modes.nvim",
+  enabled = false,
   event = "VeryLazy",
   opts = {
     colors = {
