@@ -1,5 +1,14 @@
 local function nearest_crate(fname) return require("rust_root").workspace_root(fname) end
 
+local function codelldb_executable()
+  local mason = vim.fn.stdpath "data" .. "/mason"
+  if vim.fn.has "win32" == 1 then
+    return { command = mason .. "/bin/codelldb.cmd", args = { "--port", "${port}" } }
+  end
+  local liblldb = mason .. "/opt/lldb/lib/liblldb" .. (vim.fn.has "mac" == 1 and ".dylib" or ".so")
+  return { command = mason .. "/bin/codelldb", args = { "--liblldb", liblldb, "--port", "${port}" } }
+end
+
 ---@type LazySpec
 return {
   "mrcjkb/rustaceanvim",
@@ -21,15 +30,7 @@ return {
           type = "server",
           port = "${port}",
           host = "127.0.0.1",
-          executable = {
-            command = vim.fn.stdpath "data" .. "/mason/bin/codelldb",
-            args = {
-              "--liblldb",
-              vim.fn.stdpath "data" .. "/mason/opt/lldb/lib/liblldb.dylib",
-              "--port",
-              "${port}",
-            },
-          },
+          executable = codelldb_executable(),
         },
       },
     }

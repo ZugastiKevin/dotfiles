@@ -1,7 +1,7 @@
 local function netcoredbg_path()
   local p = vim.fn.exepath "netcoredbg"
   if p ~= "" then return p end
-  return vim.fn.expand "$MASON/bin/netcoredbg"
+  return vim.fn.expand "$MASON/bin/netcoredbg" .. (vim.fn.has "win32" == 1 and ".exe" or "")
 end
 
 local vstuc_bin = vim.fn.stdpath "data" .. "/unity-debug/extension/bin/"
@@ -19,13 +19,25 @@ end
 local synced_projects = {}
 local function unity_root_of(file)
   local dir = vim.fn.fnamemodify(file, ":h")
-  while dir and dir ~= "/" do
+  while dir and dir ~= "" do
     if vim.fn.isdirectory(dir .. "/Assets") == 1 and vim.fn.filereadable(dir .. "/Packages/manifest.json") == 1 then
       return dir
     end
-    dir = vim.fn.fnamemodify(dir, ":h")
+    local parent = vim.fn.fnamemodify(dir, ":h")
+    if parent == dir then return nil end
+    dir = parent
   end
   return nil
+end
+
+local function unity_script(name)
+  local suffixes = vim.fn.has "win32" == 1 and { ".cmd", ".ps1", ".exe", "" } or { "" }
+  for _, suffix in ipairs(suffixes) do
+    local candidate = vim.fs.normalize("~/.local/bin/" .. name .. suffix)
+    if vim.fn.executable(candidate) == 1 then return candidate end
+  end
+  local on_path = vim.fn.exepath(name)
+  return on_path ~= "" and on_path or nil
 end
 
 local function ensure_unity_nvim_pkg()
@@ -34,7 +46,9 @@ local function ensure_unity_nvim_pkg()
   local manifest = root .. "/Packages/manifest.json"
   if vim.fn.filereadable(manifest) == 0 then return end
   if table.concat(vim.fn.readfile(manifest), "\n"):find("com.walcht.ide.neovim", 1, true) then return end
-  vim.system({ vim.fn.expand "~/.local/bin/unity-nvim", root }, { text = true }, function()
+  local installer = unity_script "unity-nvim"
+  if not installer then return end
+  vim.system({ installer, root }, { text = true }, function()
     vim.schedule(function()
       vim.notify(
         "Package Neovim ajoute au projet Unity — dans Unity: Regenerate project files",
@@ -129,14 +143,15 @@ return {
             pattern = "*.cs",
             desc = "Ajoute le .cs au bon .csproj Unity (roslyn le voit sans regen Unity)",
             callback = function(args)
-              local file = vim.api.nvim_buf_get_name(args.buf)
+              local file = vim.fs.normalize(vim.api.nvim_buf_get_name(args.buf))
               if file == "" or not file:find("/Assets/", 1, true) then return end
               if args.event == "BufReadPost" then
                 local root = unity_root_of(file)
-                if not root or synced_projects[root] then return end
+                local sync_all = unity_script "unity-csproj-sync-all"
+                if not root or not sync_all or synced_projects[root] then return end
                 synced_projects[root] = true
                 vim.system(
-                  { vim.fn.expand "~/.local/bin/unity-csproj-sync-all", root },
+                  { sync_all, root },
                   { text = true },
                   function(res)
                     local n = res.stdout and tonumber(res.stdout:match "synced (%d+)")
@@ -148,8 +163,10 @@ return {
                   end
                 )
               else
+                local sync_one = unity_script "unity-csproj-sync"
+                if not sync_one then return end
                 vim.system(
-                  { vim.fn.expand "~/.local/bin/unity-csproj-sync", file },
+                  { sync_one, file },
                   { text = true },
                   function(res)
                     if res.stdout and res.stdout:find("added", 1, true) then

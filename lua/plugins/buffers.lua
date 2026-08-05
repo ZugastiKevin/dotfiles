@@ -6,7 +6,7 @@ local function buf_close() require("astrocore.buffer").close() end
 return {
   "AstroNvim/astrocore",
   opts = {
-    mappings = {
+    mappings = require("keymap_platform").mappings {
       n = {
         ["<D-w>"] = { buf_close, desc = "Fermer le buffer" },
         ["<D-n>"] = { "<Cmd>enew<CR>", desc = "Nouveau fichier" },

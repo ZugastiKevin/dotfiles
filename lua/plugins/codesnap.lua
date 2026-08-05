@@ -1,7 +1,7 @@
 ---@type LazySpec
 return {
   "mistricky/codesnap.nvim",
-  build = "make build_generator",
+  build = vim.fn.has "win32" == 1 and "powershell -ExecutionPolicy Bypass -File ./install.ps1" or "make build_generator",
   cmd = { "CodeSnap", "CodeSnapSave" },
   keys = {
     { "<Leader>cs", "<Esc><Cmd>CodeSnap<CR>", mode = "x", desc = "Screenshot du code (presse-papier)" },

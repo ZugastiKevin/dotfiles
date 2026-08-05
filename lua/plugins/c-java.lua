@@ -17,7 +17,7 @@ end
 local function codelldb_path()
   local p = vim.fn.exepath "codelldb"
   if p ~= "" then return p end
-  return vim.fn.expand "$MASON/bin/codelldb"
+  return vim.fn.expand "$MASON/bin/codelldb" .. (vim.fn.has "win32" == 1 and ".cmd" or "")
 end
 
 local function configure_dap()

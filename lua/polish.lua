@@ -10,11 +10,16 @@ vim.filetype.add {
   },
 }
 
-local extra_path = { vim.fn.expand "~/.cargo/bin", "/opt/homebrew/bin", "/opt/homebrew/sbin" }
+local is_windows = vim.fn.has "win32" == 1
+local path_separator = is_windows and ";" or ":"
+local extra_path = is_windows
+    and { vim.fs.normalize "~/.cargo/bin", vim.fs.normalize "~/.dotnet/tools", vim.fs.normalize "~/scoop/shims" }
+  or { vim.fs.normalize "~/.cargo/bin", "/opt/homebrew/bin", "/opt/homebrew/sbin" }
 for _, p in ipairs(extra_path) do
-  if not string.find(":" .. (vim.env.PATH or "") .. ":", ":" .. p .. ":", 1, true) then
-    vim.env.PATH = p .. ":" .. (vim.env.PATH or "")
-  end
+  local current = vim.env.PATH or ""
+  local surrounded = path_separator .. current .. path_separator
+  local already_present = string.find(surrounded, path_separator .. p .. path_separator, 1, true) ~= nil
+  if vim.fn.isdirectory(p) == 1 and not already_present then vim.env.PATH = p .. path_separator .. current end
 end
 
 vim.lsp.log.set_level(vim.log.levels.OFF)
@@ -74,9 +79,10 @@ if vim.g.neovide then
   local function nv_scale(delta)
     vim.g.neovide_scale_factor = math.max(0.5, math.min(3.0, vim.g.neovide_scale_factor * delta))
   end
-  vim.keymap.set({ "n", "i", "v", "t" }, "<D-=>", function() nv_scale(1.1) end, { desc = "Neovide zoom +" })
-  vim.keymap.set({ "n", "i", "v", "t" }, "<D-->", function() nv_scale(1 / 1.1) end, { desc = "Neovide zoom -" })
-  vim.keymap.set({ "n", "i", "v", "t" }, "<D-0>", function() vim.g.neovide_scale_factor = 1.0 end, { desc = "Neovide zoom reset" })
+  local platform_key = require("keymap_platform").key
+  vim.keymap.set({ "n", "i", "v", "t" }, platform_key "<D-=>", function() nv_scale(1.1) end, { desc = "Neovide zoom +" })
+  vim.keymap.set({ "n", "i", "v", "t" }, platform_key "<D-->", function() nv_scale(1 / 1.1) end, { desc = "Neovide zoom -" })
+  vim.keymap.set({ "n", "i", "v", "t" }, platform_key "<D-0>", function() vim.g.neovide_scale_factor = 1.0 end, { desc = "Neovide zoom reset" })
 end
 
 local aug = vim.api.nvim_create_augroup("anna_polish", { clear = true })

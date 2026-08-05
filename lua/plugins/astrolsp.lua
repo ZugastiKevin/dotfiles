@@ -38,7 +38,7 @@ return {
         },
       },
     },
-    mappings = {
+    mappings = require("keymap_platform").mappings {
       n = {
         gD = {
           function() vim.lsp.buf.declaration() end,

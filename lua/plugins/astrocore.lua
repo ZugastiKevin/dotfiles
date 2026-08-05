@@ -82,7 +82,7 @@ return {
         no_rust_maps = 1,
       },
     },
-    mappings = {
+    mappings = require("keymap_platform").mappings {
       n = {
         ["]b"] = { function() require("astrocore.buffer").nav(vim.v.count1) end, desc = "Next buffer" },
         ["[b"] = { function() require("astrocore.buffer").nav(-vim.v.count1) end, desc = "Previous buffer" },

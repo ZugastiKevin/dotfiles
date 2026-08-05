@@ -223,6 +223,12 @@ local function render(title, sections)
 end
 
 local function show(title, sections)
+  local platform_key = require("keymap_platform").key
+  for _, section in ipairs(sections) do
+    for _, entry in ipairs(section[2]) do
+      entry[1] = platform_key(entry[1])
+    end
+  end
   local lines, hl = render(title, sections)
   local width = 0
   for _, l in ipairs(lines) do width = math.max(width, vim.fn.strdisplaywidth(l)) end
@@ -303,7 +309,7 @@ return {
       Cheatsheet = { open_cheatsheet, desc = "Raccourcis pertinents (contextuel)" },
       Deplacements = { open_movement, desc = "Cheatsheet des deplacements" },
     },
-    mappings = {
+    mappings = require("keymap_platform").mappings {
       n = {
         ["<Leader>?"] = { open_cheatsheet, desc = "Mes raccourcis (contextuel)" },
         ["<D-?>"] = { open_cheatsheet, desc = "Mes raccourcis (contextuel)" },

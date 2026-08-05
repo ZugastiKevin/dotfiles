@@ -1,4 +1,4 @@
-local jdk25 = "/Library/Java/JavaVirtualMachines/jdk-25.jdk/Contents/Home"
+local jdk25 = require("java_home").find "25"
 
 ---@type LazySpec
 return {
@@ -16,9 +16,9 @@ return {
       settings = {
         java = {
           configuration = {
-            runtimes = {
+            runtimes = jdk25 and {
               { name = "JavaSE-25", path = jdk25, default = true },
-            },
+            } or {},
           },
           import = {
             gradle = {
