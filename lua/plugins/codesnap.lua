@@ -11,7 +11,7 @@ return {
     save_path = "~/Pictures/CodeSnap",
     has_breadcrumbs = true,
     mac_window_bar = true,
-    bg_color = "#d6405f",
+    bg_color = "#c9604f",
     watermark = "",
     code_font_family = "JetBrainsMono Nerd Font",
   },

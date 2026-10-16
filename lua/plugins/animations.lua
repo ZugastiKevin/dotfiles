@@ -9,28 +9,28 @@ return {
           enabled = true,
           default_animation = {
             name = "fade",
-            settings = { from_color = "#8fe0d4", to_color = "Normal", max_duration = 420, min_duration = 250 },
+            settings = { from_color = "#c1c0c3", to_color = "Normal", max_duration = 420, min_duration = 250 },
           },
         },
         paste = {
           enabled = true,
           default_animation = {
             name = "reverse_fade",
-            settings = { from_color = "#b79cf0", to_color = "Normal", max_duration = 400, min_duration = 250 },
+            settings = { from_color = "#cf8f7c", to_color = "Normal", max_duration = 400, min_duration = 250 },
           },
         },
         search = {
           enabled = true,
           default_animation = {
             name = "pulse",
-            settings = { from_color = "#b79cf0", to_color = "Normal" },
+            settings = { from_color = "#cf8f7c", to_color = "Normal" },
           },
         },
         undo = {
           enabled = true,
           default_animation = {
             name = "fade",
-            settings = { from_color = "#d6405f", to_color = "Normal", max_duration = 420, min_duration = 300 },
+            settings = { from_color = "#c9604f", to_color = "Normal", max_duration = 420, min_duration = 300 },
           },
         },
         redo = {
@@ -47,7 +47,7 @@ return {
           on_event = { "WinEnter", "BufEnter" },
           default_animation = {
             name = "fade",
-            settings = { from_color = "#8fe0d4", to_color = "Normal", max_duration = 600, min_duration = 600 },
+            settings = { from_color = "#c1c0c3", to_color = "Normal", max_duration = 600, min_duration = 600 },
           },
         },
       },

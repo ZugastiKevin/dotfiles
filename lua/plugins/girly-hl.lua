@@ -9,9 +9,9 @@ return {
           desc = "Palette girly des effets visuels",
           callback = function()
             local hl = vim.api.nvim_set_hl
-            hl(0, "HlSearchLens", { fg = "#b79cf0", bg = "#2a1430", italic = true })
-            hl(0, "HlSearchLensNear", { fg = "#d6405f", bg = "#3d1030", bold = true })
-            hl(0, "GirlyBubbleContent", { fg = "#6fb7c9", bg = "#33122b", italic = true })
+            hl(0, "HlSearchLens", { fg = "#cf8f7c", bg = "#2a1430", italic = true })
+            hl(0, "HlSearchLensNear", { fg = "#c9604f", bg = "#3d1030", bold = true })
+            hl(0, "GirlyBubbleContent", { fg = "#a47669", bg = "#33122b", italic = true })
             hl(0, "GirlyBubbleEdge", { fg = "#33122b" })
             hl(0, "GirlySaveFlash", { bg = "#4a1f3d" })
           end,

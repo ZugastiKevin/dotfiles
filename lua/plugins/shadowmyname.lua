@@ -8,7 +8,7 @@ return {
     words = { "token", "secret", "password", "api_key" },
     whole_word = true,
     case_sensitive = false,
-    highlight = { fg = "#8fe0d4", bg = "#8fe0d4", bold = true },
+    highlight = { fg = "#c1c0c3", bg = "#c1c0c3", bold = true },
   },
   config = function(_, opts) require("shadowMyName").setup(opts) end,
   specs = {

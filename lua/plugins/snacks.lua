@@ -46,7 +46,7 @@ return {
               event = { "VimEnter", "ColorScheme" },
               desc = "Teinte rose du header du dashboard",
               callback = function()
-                vim.api.nvim_set_hl(0, "SnacksDashboardHeader", { fg = "#d6405f", bold = true })
+                vim.api.nvim_set_hl(0, "SnacksDashboardHeader", { fg = "#c9604f", bold = true })
               end,
             },
           },

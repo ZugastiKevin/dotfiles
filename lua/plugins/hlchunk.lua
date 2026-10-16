@@ -8,8 +8,8 @@ return {
       duration = 180,
       delay = 80,
       style = {
-        { fg = "#8fe0d4" },
-        { fg = "#d6405f" },
+        { fg = "#c1c0c3" },
+        { fg = "#c9604f" },
       },
       chars = {
         horizontal_line = "─",

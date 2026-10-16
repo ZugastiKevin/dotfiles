@@ -1,9 +1,9 @@
 local function highlights()
   local hl = vim.api.nvim_set_hl
-  hl(0, "MultiCursorCursor", { bg = "#d6405f", fg = "#0c0910", bold = true })
+  hl(0, "MultiCursorCursor", { bg = "#c9604f", fg = "#0c0910", bold = true })
   hl(0, "MultiCursorVisual", { link = "Visual" })
-  hl(0, "MultiCursorSign", { fg = "#8fe0d4" })
-  hl(0, "MultiCursorMatchPreview", { bg = "#b79cf0", fg = "#0c0910" })
+  hl(0, "MultiCursorSign", { fg = "#c1c0c3" })
+  hl(0, "MultiCursorMatchPreview", { bg = "#cf8f7c", fg = "#0c0910" })
   hl(0, "MultiCursorDisabledCursor", { bg = "#8a7a90", fg = "#0c0910" })
   hl(0, "MultiCursorDisabledVisual", { link = "Visual" })
   hl(0, "MultiCursorDisabledSign", { fg = "#8a7a90" })

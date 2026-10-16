@@ -7,7 +7,7 @@ return {
       enabled = true,
       width = 12,
       min_jump = 10,
-      highlight = { bg = "#8fe0d4", ctermbg = 13 },
+      highlight = { bg = "#c1c0c3", ctermbg = 13 },
     }
   end,
 }

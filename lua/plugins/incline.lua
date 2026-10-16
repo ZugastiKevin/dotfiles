@@ -14,7 +14,7 @@ return {
       local fname = vim.fn.fnamemodify(name, ":t")
       if fname == "" then fname = "[No Name]" end
       local modified = vim.bo[props.buf].modified
-      local accent = props.focused and "#8fe0d4" or "#9a8aa8"
+      local accent = props.focused and "#c1c0c3" or "#9a8aa8"
       local segments = {}
       local ok, devicons = pcall(require, "nvim-web-devicons")
       if ok then
@@ -22,7 +22,7 @@ return {
         if icon then table.insert(segments, { icon .. " ", guifg = color }) end
       end
       table.insert(segments, { fname, guifg = accent, gui = modified and "bold,italic" or "bold" })
-      if modified then table.insert(segments, { " ●", guifg = "#b79cf0" }) end
+      if modified then table.insert(segments, { " ●", guifg = "#cf8f7c" }) end
       return segments
     end,
   },

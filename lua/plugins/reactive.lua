@@ -1,9 +1,9 @@
 local ACCENTS = {
-  insert = "#d6405f",
-  visual = "#b79cf0",
-  replace = "#d6405f",
+  insert = "#c9604f",
+  visual = "#cf8f7c",
+  replace = "#c9604f",
   change = "#7df9ff",
-  delete = "#d6405f",
+  delete = "#c9604f",
   yank = "#ffd479",
 }
 
