@@ -63,11 +63,11 @@ M.themes = {
   },
   jenova = {
     label = "Jenova",
-    bg = "#0a0d14", bg_alt = "#070a10", float = "#0e121b", cursorline = "#151a26",
-    linenr = "#3f5560", visual = "#2a2346", punct = "#9bb8c4", delim = "#6f8a96",
-    txt = "#d8f3ee", comment = "#5e7f86",
-    func = "#8fe0d4", kw = "#b79cf0", typ = "#6fb7c9", str = "#d9b26a",
-    num = "#d6405f", prop = "#9ad7e8", param = "#c9b6f5", op = "#d6405f",
+    bg = "#0f0d0e", bg_alt = "#0b0a0b", float = "#151213", cursorline = "#1e1918",
+    linenr = "#5a4a47", visual = "#3a2a26", punct = "#9d8d8c", delim = "#69696e",
+    txt = "#d3d2d6", comment = "#7a7274",
+    func = "#cf8f7c", kw = "#9aa0b8", typ = "#b9a39e", str = "#7fbf94",
+    num = "#c9604f", prop = "#b4b3b8", param = "#d8b4a8", op = "#b8695a",
   },
 }
 
@@ -204,6 +204,13 @@ function M.apply(name)
     NeoTreeRootName = { fg = p.func, bold = true },
     NeoTreeGitModified = { fg = p.typ },
     NeoTreeFileNameOpened = { fg = p.func },
+
+    SnacksDashboardHeader = { fg = p.prop, bold = true },
+    SnacksDashboardTitle = { fg = p.func, bold = true },
+    SnacksDashboardDesc = { fg = p.txt },
+    SnacksDashboardIcon = { fg = p.func },
+    SnacksDashboardKey = { fg = p.num },
+    SnacksDashboardFooter = { fg = p.typ, bold = true },
 
     DiagnosticError = { fg = "#e0556f" },
     DiagnosticWarn = { fg = p.num },

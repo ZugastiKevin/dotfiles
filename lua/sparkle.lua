@@ -2,7 +2,7 @@ local M = {}
 
 local namespace = vim.api.nvim_create_namespace "girly_sparkle"
 local glyphs = { "✦", "✧", "·", "＊" }
-local steps = { "#d6405f", "#d4549b", "#8a5578" }
+local steps = { "#d3d2d6", "#9d8d8c", "#5a4a47" }
 local last_burst = 0
 
 local function set_step_colors(step)
@@ -54,7 +54,7 @@ local function burst(buf)
 end
 
 function M.register()
-  vim.api.nvim_set_hl(0, "GirlySaveFlash", { bg = "#4a1f3d" })
+      vim.api.nvim_set_hl(0, "GirlySaveFlash", { bg = "#2a1d1a" })
   set_step_colors(1)
 
   vim.api.nvim_create_autocmd("BufWritePost", {

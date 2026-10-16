@@ -65,11 +65,11 @@ if vim.g.neovide then
   vim.g.neovide_theme = "dark"
 
   local trail_colors = {
-    "#8fe0d4", "#b79cf0", "#b79cf0", "#6fb7c9", "#d6405f",
-    "#b98aff", "#7df9ff", "#5ef1d6", "#ffd479", "#86d3ff", "#ffae57", "#a8f0c6",
+    "#c1c0c3", "#cf8f7c", "#c9604f", "#a47669",
+    "#9aa0b8", "#7fbf94", "#d8b4a8",
   }
   local function rand_cursor()
-    vim.api.nvim_set_hl(0, "Cursor", { bg = trail_colors[math.random(#trail_colors)], fg = "#0c0910" })
+    vim.api.nvim_set_hl(0, "Cursor", { bg = trail_colors[math.random(#trail_colors)], fg = "#0f0d0e" })
   end
   rand_cursor()
   local ct = (vim.uv or vim.loop).new_timer()
