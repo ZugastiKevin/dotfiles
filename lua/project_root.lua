@@ -23,6 +23,7 @@ M.anchors = {
   "package.json",
   "pyproject.toml",
   ".git",
+  "composer.json",
 }
 
 M.containers = {
