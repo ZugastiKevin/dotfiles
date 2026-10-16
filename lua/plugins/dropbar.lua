@@ -21,6 +21,6 @@ return {
     local h = vim.api.nvim_set_hl
     h(0, "DropBarIconKindFunction", { fg = "#ff5eb4" })
     h(0, "DropBarIconUISeparator", { fg = "#9a8aa8" })
-    h(0, "DropBarCurrentContext", { fg = "#ff4fd8", bold = true })
+    h(0, "DropBarCurrentContext", { fg = "#8fe0d4", bold = true })
   end,
 }

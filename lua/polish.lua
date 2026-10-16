@@ -65,7 +65,7 @@ if vim.g.neovide then
   vim.g.neovide_theme = "dark"
 
   local trail_colors = {
-    "#ff4fd8", "#c14fff", "#ff6ac1", "#ff7eb6", "#ff5d8f",
+    "#8fe0d4", "#b79cf0", "#b79cf0", "#6fb7c9", "#d6405f",
     "#b98aff", "#7df9ff", "#5ef1d6", "#ffd479", "#86d3ff", "#ffae57", "#a8f0c6",
   }
   local function rand_cursor()

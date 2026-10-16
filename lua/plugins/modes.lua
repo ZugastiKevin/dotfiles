@@ -5,9 +5,9 @@ return {
   event = "VeryLazy",
   opts = {
     colors = {
-      insert = "#ff2d95",
-      visual = "#c14fff",
-      delete = "#ff5d8f",
+      insert = "#d6405f",
+      visual = "#b79cf0",
+      delete = "#d6405f",
       copy = "#ffd479",
     },
     line_opacity = 0.18,

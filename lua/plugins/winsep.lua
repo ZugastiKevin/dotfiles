@@ -3,6 +3,6 @@ return {
   "nvim-zh/colorful-winsep.nvim",
   event = "VeryLazy",
   opts = {
-    highlight = "#ff4fd8",
+    highlight = "#8fe0d4",
   },
 }

@@ -2,7 +2,7 @@ local M = {}
 
 local statefile = vim.fn.stdpath "data" .. "/girly_theme.txt"
 
-M.order = { "neon", "pastel", "darkpink", "bubblegum", "vaporwave", "candyland", "pinkpanic" }
+M.order = { "neon", "pastel", "darkpink", "bubblegum", "vaporwave", "candyland", "pinkpanic", "jenova" }
 
 M.themes = {
   neon = {
@@ -61,6 +61,14 @@ M.themes = {
     func = "#f43c86", kw = "#e90c7a", typ = "#e90cde", str = "#ffaaf5",
     num = "#ff70b5", prop = "#9adcff", param = "#ffaaf5", op = "#ff70b5",
   },
+  jenova = {
+    label = "Jenova",
+    bg = "#0a0d14", bg_alt = "#070a10", float = "#0e121b", cursorline = "#151a26",
+    linenr = "#3f5560", visual = "#2a2346", punct = "#9bb8c4", delim = "#6f8a96",
+    txt = "#d8f3ee", comment = "#5e7f86",
+    func = "#8fe0d4", kw = "#b79cf0", typ = "#6fb7c9", str = "#d9b26a",
+    num = "#d6405f", prop = "#9ad7e8", param = "#c9b6f5", op = "#d6405f",
+  },
 }
 
 M.current = "neon"
@@ -84,8 +92,8 @@ local function write_choice(name)
 end
 
 function M.resolve()
-  M.current = read_choice() or "neon"
-  if not M.themes[M.current] then M.current = "neon" end
+  M.current = read_choice() or "jenova"
+  if not M.themes[M.current] then M.current = "jenova" end
   return M.current
 end
 
@@ -197,7 +205,7 @@ function M.apply(name)
     NeoTreeGitModified = { fg = p.typ },
     NeoTreeFileNameOpened = { fg = p.func },
 
-    DiagnosticError = { fg = "#ff5d8f" },
+    DiagnosticError = { fg = "#e0556f" },
     DiagnosticWarn = { fg = p.num },
     DiagnosticHint = { fg = p.kw },
     DiagnosticInfo = { fg = "#86d3ff" },

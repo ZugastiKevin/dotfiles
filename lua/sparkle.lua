@@ -2,7 +2,7 @@ local M = {}
 
 local namespace = vim.api.nvim_create_namespace "girly_sparkle"
 local glyphs = { "✦", "✧", "·", "＊" }
-local steps = { "#ff2d95", "#d4549b", "#8a5578" }
+local steps = { "#d6405f", "#d4549b", "#8a5578" }
 local last_burst = 0
 
 local function set_step_colors(step)

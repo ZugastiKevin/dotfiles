@@ -237,10 +237,10 @@ local function show(title, sections)
   local buf = vim.api.nvim_create_buf(false, true)
   vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
 
-  vim.api.nvim_set_hl(0, "CheatBorder", { fg = "#ff4fd8", bg = "NONE" })
-  vim.api.nvim_set_hl(0, "CheatTitle", { fg = "#ff7eb6", bold = true })
-  vim.api.nvim_set_hl(0, "CheatHeader", { fg = "#ff4fd8", bold = true })
-  vim.api.nvim_set_hl(0, "CheatKey", { fg = "#c14fff", bold = true })
+  vim.api.nvim_set_hl(0, "CheatBorder", { fg = "#8fe0d4", bg = "NONE" })
+  vim.api.nvim_set_hl(0, "CheatTitle", { fg = "#6fb7c9", bold = true })
+  vim.api.nvim_set_hl(0, "CheatHeader", { fg = "#8fe0d4", bold = true })
+  vim.api.nvim_set_hl(0, "CheatKey", { fg = "#b79cf0", bold = true })
   vim.api.nvim_set_hl(0, "CheatDim", { fg = "#8a7a90", italic = true })
 
   local ns = vim.api.nvim_create_namespace "cheatsheet"

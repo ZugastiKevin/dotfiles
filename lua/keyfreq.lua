@@ -94,7 +94,7 @@ function M.stats()
   lines[#lines + 1] = string.format("  %d frappes mappees comptees au total  ·  q pour fermer", total)
   hl[#lines] = "Comment"
 
-  vim.api.nvim_set_hl(0, "GirlyKeyTop", { fg = "#ff2d95", bold = true })
+  vim.api.nvim_set_hl(0, "GirlyKeyTop", { fg = "#d6405f", bold = true })
 
   local buf = vim.api.nvim_create_buf(false, true)
   vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
